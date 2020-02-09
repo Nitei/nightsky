@@ -1,8 +1,14 @@
 <div *ngIf="calculadora"
   class="inmense box">
   <div [formGroup]="calculadora">
-    <!-- <div formGroupName="calculadora"> -->
-    <h1>Cuando es {{calculadora.get('first').value}} x {{calculadora.get('second').value}} ?</h1>
+    <div [ngSwitch]="calculadora.get('typeGame').value">
+      <h1>Cuando es {{calculadora.get('first').value}}
+        <span *ngSwitchCase="'multiplicacion'">x</span>
+        <span *ngSwitchCase="'division'">/</span>
+        <span *ngSwitchCase="'suma'">+</span>
+        <span *ngSwitchCase="'resta'">-</span>
+        {{calculadora.get('second').value}} ?</h1>
+    </div>
     <input formControlName="result">
   </div>
   <div class="box-result"

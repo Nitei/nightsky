@@ -11,15 +11,13 @@ import { CalculadoraComponent } from './calculadora/calculadora.component';
     CommonModule,
     GamesRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   exports: [
-    // ReactiveFormsModule,
-    // FormsModule
   ],
   declarations: [
     GamesComponent,
-    CalculadoraComponent
+    CalculadoraComponent,
   ]
 })
 export class GamesModule { }
