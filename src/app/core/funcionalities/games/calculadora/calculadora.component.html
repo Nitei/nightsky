@@ -1,4 +1,10 @@
 
-<div class="box">
-  <h1>calculadora works!</h1>
+<div *ngIf="calculadora" class="inmense box">
+  <div [formGroup]="calculadora">
+    <!-- <div formGroupName="calculadora"> -->
+      <h1>Cuando es {{calculadora.get('first').value}} x {{calculadora.get('second').value}} ?</h1>
+      <input formControlName="result">
+    </div>
+  <!-- <input formControlName="result" type="number"> -->
 </div>
+  
