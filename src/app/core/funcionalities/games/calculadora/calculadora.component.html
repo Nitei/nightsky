@@ -7,8 +7,10 @@
   </div>
   <div class="box-result"
     [ngClass]="{
-    'win': calculadora.get('win').value === true,
-    'lose': calculadora.get('win').value === false 
+    'win': calculadora.get('status').value === true,
+    'lose': calculadora.get('status').value === false 
   }">
-  <h1>{{this.calculadora.get( 'win' ).value}}</h1></div>
+    <h1 *ngIf="this.calculadora.get( 'status' ).value === true">GANASTE</h1>
+    <h1 *ngIf="this.calculadora.get( 'status' ).value === false">FALLASTE</h1>
+  </div>
 </div>

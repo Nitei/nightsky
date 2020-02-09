@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs';
@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
   templateUrl: './calculadora.component.html',
   styleUrls: [ './calculadora.component.scss' ]
 } )
-export class CalculadoraComponent implements OnInit {
+export class CalculadoraComponent implements OnInit, OnDestroy {
 
   calculadora: FormGroup;
   stopCheckResult: Subject<boolean> = new Subject();
@@ -19,6 +19,10 @@ export class CalculadoraComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
   }
+  ngOnDestroy(): void {
+    this.stopCheckResult.next(true);
+    this.stopCheckResult.complete();
+  }
 
   generateNumber( numDigit: number = 1 ): number {
     return Number( ( Math.random() * ( numDigit * 10 ) ).toFixed( 0 ) );
@@ -28,26 +32,31 @@ export class CalculadoraComponent implements OnInit {
     this.calculadora.get( 'result' ).valueChanges.pipe(
       takeUntil( this.stopCheckResult )
     ).subscribe( data => {
-      if ( data ) {
+      if (
+        data
+        && Number( data ) >= 0
+      ) {
         console.log( data );
         if ( (
-          parseInt( this.calculadora.get( 'first' ).value )
-          * parseInt( this.calculadora.get( 'second' ).value ) )
-          === parseInt( this.calculadora.get( 'result' ).value )
+          this.calculadora.get( 'first' ).value
+          * this.calculadora.get( 'second' ).value )
+          === Number( this.calculadora.get( 'result' ).value )
         ) {
-          this.calculadora.get( 'win' ).setValue( true );
-          this.stopCheckResult.next( true );
-          this.stopCheckResult.complete();
+          this.calculadora.get( 'status' ).setValue( true );
+          this.reset();
         } else {
-          this.calculadora.get( 'win' ).setValue( null );
+          this.calculadora.get( 'status' ).setValue( false );
         }
-
-        console.log( this.calculadora.controls );
       }
     } )
   };
 
-  initObsForm() {
+  reset() {
+    this.stopCheckResult.next( true );
+    setTimeout( () => {
+      this.stopCheckResult.next( false );
+      this.initForm();
+    }, 1000 );
   };
 
   initForm() {
@@ -55,9 +64,8 @@ export class CalculadoraComponent implements OnInit {
       first: this.fb.control( this.generateNumber() ),
       second: this.fb.control( this.generateNumber() ),
       result: this.fb.control( null ),
-      win: this.fb.control( false ),
+      status: this.fb.control( null ),
     } );
-    this.initObsForm();
     this.checkResult();
   };
 
