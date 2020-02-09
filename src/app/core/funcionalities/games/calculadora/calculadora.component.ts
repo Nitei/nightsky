@@ -20,15 +20,15 @@ export class CalculadoraComponent implements OnInit, OnDestroy {
     this.initForm();
   }
   ngOnDestroy(): void {
-    this.stopCheckResult.next(true);
+    this.stopCheckResult.next( true );
     this.stopCheckResult.complete();
   }
 
-  generateNumber( numDigit: number = 1 ): number {
+  private generateNumber( numDigit: number ): number {
     return Number( ( Math.random() * ( numDigit * 10 ) ).toFixed( 0 ) );
   }
 
-  checkResult() {
+  private checkResult() {
     this.calculadora.get( 'result' ).valueChanges.pipe(
       takeUntil( this.stopCheckResult )
     ).subscribe( data => {
@@ -36,36 +36,45 @@ export class CalculadoraComponent implements OnInit, OnDestroy {
         data
         && Number( data ) >= 0
       ) {
-        console.log( data );
-        if ( (
-          this.calculadora.get( 'first' ).value
-          * this.calculadora.get( 'second' ).value )
-          === Number( this.calculadora.get( 'result' ).value )
-        ) {
-          this.calculadora.get( 'status' ).setValue( true );
-          this.reset();
-        } else {
-          this.calculadora.get( 'status' ).setValue( false );
+        const resultLength = ( this.formGet( 'first' ) * this.formGet( 'second' ) ).toString().length;
+        if ( data.length === resultLength ) {
+          if (
+            ( this.formGet( 'first' )
+              * this.formGet( 'second' )
+            ) === Number( this.formGet( 'result' ) )
+          ) {
+            this.calculadora.get( 'status' ).setValue( true );
+            this.reset();
+          } else {
+            this.calculadora.get( 'status' ).setValue( false );
+            this.reset();
+          }
         }
       }
     } )
   };
 
-  reset() {
+  private formGet( propName: string ) {
+    return this.calculadora.get( propName ).value;
+  }
+
+  private reset() {
     this.stopCheckResult.next( true );
-    setTimeout( () => {
+    const timer = setTimeout( () => {
       this.stopCheckResult.next( false );
       this.initForm();
-    }, 1000 );
+      clearTimeout( timer );
+    }, 500 );
   };
 
-  initForm() {
+  private initForm(howManyNumbers: number = 1) {
     this.calculadora = this.fb.group( {
-      first: this.fb.control( this.generateNumber() ),
-      second: this.fb.control( this.generateNumber() ),
+      first: this.fb.control( this.generateNumber( howManyNumbers) ),
+      second: this.fb.control( this.generateNumber( howManyNumbers) ),
       result: this.fb.control( null ),
       status: this.fb.control( null ),
     } );
+
     this.checkResult();
   };
 
