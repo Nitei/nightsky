@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { GamesComponent } from './games.component';
 
 
 const routes: Routes = [
   {
-    path: 'games', loadChildren: () => import( './core/funcionalities/games/games.module' ).then( m => m.GamesModule ),
+    path: 'games', component: GamesComponent,
   },
   {
     path:'', redirectTo: 'games', pathMatch: 'full'
@@ -15,4 +16,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class GamesRoutingModule { }
