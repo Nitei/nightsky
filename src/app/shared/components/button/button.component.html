@@ -1,1 +1,1 @@
-<button class="{{button?.class}}" (click)="click.emit()">{{button?.label}}</button>
+<button *ngIf="button" class="{{button?.class}}" (click)="clicked.emit()">{{button?.label}}</button>

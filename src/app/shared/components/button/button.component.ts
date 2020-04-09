@@ -8,5 +8,5 @@ import { ButtonModel } from '../../models/button.model';
 })
 export class ButtonComponent {
   @Input() button: ButtonModel;
-  @Output() click: EventEmitter<void> = new EventEmitter();
+  @Output() clicked: EventEmitter<void> = new EventEmitter();
 }

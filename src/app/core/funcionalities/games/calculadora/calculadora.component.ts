@@ -1,12 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs';
 import { TypeGame } from '../../../../shared/types/type-games.type';
+import { UtilsService } from '../../../../shared/services/utils.service';
 
-// Object.prototype.empty = function(a) {
-//   return a && Object.keys( a ).length > 0 ? true : false ;
-//   }
 @Component( {
   selector: 'ns-calculadora',
   templateUrl: './calculadora.component.html',
@@ -15,30 +13,23 @@ import { TypeGame } from '../../../../shared/types/type-games.type';
 export class CalculadoraComponent implements OnInit, OnDestroy {
 
   calculadora: FormGroup;
+  gameTypes: TypeGame[] = [ 'suma', 'resta', 'multiplicacion', 'division' ];
+  currentGameType: number;
   stopCheckResult: Subject<boolean> = new Subject();
-  jorge = {a:'a'};
 
-  constructor( private fb: FormBuilder ) { }
+  constructor(
+    private fb: FormBuilder,
+    private utils: UtilsService,
+  ) { }
 
   ngOnInit(): void {
-    this.initForm( 2, 'suma' );
-    this.check();
-    setTimeout(() => {
-      
-    }, 1000);
+    this.currentGameType = 3;
+    this.initGame();
   }
-  check() {
-    // console.assert(this.jorge, 'asert' )
-    console.log('log ', this.jorge)
-    console.log('! ', !this.jorge)
-    console.log( '!! ', !!this.jorge )
-    if (this.jorge) {
-      console.log('log if', this.jorge)
-      
-    } else {
-      
-      console.log('log else', this.jorge)
-    }
+  
+  initGame() {
+    this.currentGameType === 3 ? this.currentGameType = 0 : this.currentGameType++;
+    this.initForm( 2, this.gameTypes[ this.currentGameType ] );
   };
 
   ngOnDestroy(): void {
@@ -54,6 +45,7 @@ export class CalculadoraComponent implements OnInit, OnDestroy {
     this.calculadora.get( 'result' ).valueChanges.pipe(
       takeUntil( this.stopCheckResult )
     ).subscribe( data => {
+      console.log(data)
       const resultLength = data.toString().length > 0 ? data.toString().length : this.reset();
       console.log( result )
       if ( result ) {
@@ -74,7 +66,7 @@ export class CalculadoraComponent implements OnInit, OnDestroy {
   };
 
   private getResult( typeGame: TypeGame, firstN: number, secondN: number ): any {
-    if ( typeGame && firstN && secondN ) {
+    if ( typeGame && isNaN(firstN) && isNaN(secondN) ) {
     const
     first = Number( firstN ),
       second = Number( secondN );
