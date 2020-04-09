@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ButtonModel } from '../../../shared/models/button.model';
 
 @Component({
   selector: 'ns-games',
@@ -7,6 +8,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./games.component.scss']
 })
 export class GamesComponent implements OnInit {
+  btnConfig: ButtonModel = {
+    class: 'w_normal c_white bg_red',
+    label: 'Texto'
+  }
 
   constructor(
     private router: Router

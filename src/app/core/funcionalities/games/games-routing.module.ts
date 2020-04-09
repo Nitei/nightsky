@@ -11,6 +11,9 @@ const routes: Routes = [
       {
         path: 'calculadora', component: CalculadoraComponent
       },
+      {
+        path: '**', redirectTo: 'calculadora', pathMatch: 'full'
+      }
     ]
   },
   {

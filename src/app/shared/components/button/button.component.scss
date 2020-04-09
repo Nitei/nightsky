@@ -1,0 +1,45 @@
+@import "../../../styles/index";
+
+button {
+  border-radius: 5px;
+  width: 11rem;
+  height: 1.8rem;
+  border-style: none;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: 0px 0px 8px 0px $ns_black;
+  &:active {
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+  &.bg_blue {
+    background-color: $ns_blue_light;
+  }
+  &.bg_red {
+    background-color: $ns_red_light;
+  }
+  &.c_white {
+    color: $ns_white;
+  }
+  &.w_full {
+    width: 100%;
+  }
+  &.w_large {
+    width: 16rem;
+  }
+  &.w_normal {
+    width: 11rem;
+  }
+  &.w_small {
+    width: 6rem;
+  }
+  &:hover {
+    &.bg_blue {
+      background-color: $ns_blue_dark;
+    }
+    &.bg_red {
+      background-color: $ns_red_dark;
+    }
+  }
+}
