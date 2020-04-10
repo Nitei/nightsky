@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs';
-import { TypeGame } from '../../../../shared/types/type-games.type';
+import { TypeGameName } from '../../../../shared/types/type-games-names.type';
 import { UtilsService } from '../../../../shared/services/utils.service';
+import { TypeGameSymbol } from '../../../../shared/types/type-games-symbols.type';
 
 @Component( {
   selector: 'ns-calculadora',
@@ -13,7 +14,8 @@ import { UtilsService } from '../../../../shared/services/utils.service';
 export class CalculadoraComponent implements OnInit, OnDestroy {
 
   calculadora: FormGroup;
-  gameTypes: TypeGame[] = [ 'suma', 'resta', 'multiplicacion', 'division' ];
+  gameTypesNames: TypeGameName[] = [ 'suma', 'resta', 'multiplicacion', 'division' ];
+  gameTypesSymbols: TypeGameSymbol[] = [ '+', '-', 'x', '/' ];
   currentGameType: number;
   stopCheckResult: Subject<boolean> = new Subject();
 
@@ -24,12 +26,16 @@ export class CalculadoraComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.currentGameType = 3;
-    this.initGame();
+    this.initGame( 'suma' );
   }
-  
-  initGame() {
-    this.currentGameType === 3 ? this.currentGameType = 0 : this.currentGameType++;
-    this.initForm( 2, this.gameTypes[ this.currentGameType ] );
+
+  capitalize(text: string): string {
+    return this.utils.capitalizeText( text );
+  }
+
+  initGame(game: TypeGameName) {
+    // this.currentGameType === 3 ? this.currentGameType = 0 : this.currentGameType++;
+    this.initForm( 2, game );
   };
 
   ngOnDestroy(): void {
@@ -38,65 +44,55 @@ export class CalculadoraComponent implements OnInit, OnDestroy {
   }
 
   private generateNumber( numDigit: number ): number {
-    return Number( ( Math.random() * ( numDigit * 10 ) ).toFixed( 0 ) );
+
+    return parseFloat( ( Math.random() * ( numDigit * 10 ) ).toFixed( 0 ) );
   }
 
   private checkResult( result: number ) {
     this.calculadora.get( 'result' ).valueChanges.pipe(
       takeUntil( this.stopCheckResult )
     ).subscribe( data => {
-      console.log(data)
+      if ( !data ) { return }
       const resultLength = data.toString().length > 0 ? data.toString().length : this.reset();
-      console.log( result )
       if ( result ) {
-        if ( result && Number( result ) > 0 ) {
-          if ( result.toString().length === resultLength ) {
-            if ( result === Number( this.formGet( 'result' ) ) ) {
-              this.calculadora.get( 'status' ).setValue( true );
-              this.reset();;
-            } else {
-              this.calculadora.get( 'status' ).setValue( false );
-              this.reset();;
-            }
+        if ( result.toString().length === resultLength ) {
+          if ( result === parseFloat( this.formGet( 'result' ) ) ) {
+            this.calculadora.get( 'status' ).setValue( true );
+          } else {
+            this.calculadora.get( 'status' ).setValue( false );
           }
+          this.reset();
         }
       }
-
     } )
   };
 
-  private getResult( typeGame: TypeGame, firstN: number, secondN: number ): any {
-    if ( typeGame && isNaN(firstN) && isNaN(secondN) ) {
-    const
-    first = Number( firstN ),
-      second = Number( secondN );
-      if (first && second) {
-      let result: number;
-      switch ( typeGame ) {
-        case 'multiplicacion':
-          result = first * second;
-          break;
-        case 'division':
-          result = Number( ( first / second ).toFixed( 1 ) );
-          break;
-        case 'suma':
-          result = first + second;
-          break;
-        case 'resta':
-          result = first - second;
-          break;
-        default:
-          break;
-      }
-      if ( result && ( result > 0 || result < 0 ) && result != null ) {
-        return result
-      } else {
-        this.reset();
-      };
-      }
-    } else {
-
+  private getResult( TypeGameName: TypeGameName, firstN: string, secondN: string ): any {
+    let
+      firstNumber: number = parseFloat(firstN),
+      secondNumber: number = parseFloat(secondN),
+      result: number;
+    switch ( TypeGameName ) {
+      case 'multiplicacion':
+        result = firstNumber * secondNumber;
+        break;
+      case 'division':
+        result = parseFloat( ( firstNumber / secondNumber ).toFixed( 1 ) );
+        break;
+      case 'suma':
+        result = firstNumber + secondNumber;
+        break;
+      case 'resta':
+        result = firstNumber - secondNumber;
+        break;
+      default:
+        break;
     }
+    if ( result && ( result > 0 || result < 0 ) && result != null ) {
+      return result
+    } else {
+      this.reset();
+    };
   }
 
   private formGet( propName: string ) {
@@ -107,25 +103,25 @@ export class CalculadoraComponent implements OnInit, OnDestroy {
     this.stopCheckResult.next( true );
     const timer = setTimeout( () => {
       this.stopCheckResult.next( false );
-      this.initForm(1, 'suma');
+      this.initForm( 1, 'suma' );
       clearTimeout( timer );
     }, 500 );
   };
 
-  private initForm( howManyNumbers: number, typeGame: TypeGame ) {
+  private initForm( howManyNumbers: number, TypeGameName: TypeGameName ) {
     this.calculadora = this.fb.group( {
-      first: this.fb.control( this.generateNumber( howManyNumbers ) ),
-      second: this.fb.control( this.generateNumber( howManyNumbers ) ),
-      result: this.fb.control( null ),
+      firstNumber: this.fb.control( this.generateNumber( howManyNumbers ) ),
+      secondNumber: this.fb.control( this.generateNumber( howManyNumbers ) ),
+      result: '',
       status: this.fb.control( null ),
-      typeGame: this.fb.control( typeGame ),
+      TypeGameName: this.fb.control( TypeGameName ),
     } );
 
     this.checkResult(
       this.getResult(
-        this.formGet( 'typeGame' ),
-        this.formGet( 'first' ),
-        this.formGet( 'second' ) )
+        this.formGet( 'TypeGameName' ),
+        this.formGet( 'firstNumber' ),
+        this.formGet( 'secondNumber' ) )
     );
   };
 
