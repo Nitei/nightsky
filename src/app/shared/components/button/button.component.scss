@@ -8,19 +8,19 @@ button {
   color: white;
   font-size: 1rem;
   outline: none;
-  box-shadow: 0px 0px 8px 0px $ns_black;
+  box-shadow: 0px 0px 8px 0px $c_black;
   &:active {
     transform: translateY(1px);
     box-shadow: none;
   }
   &.bg_blue {
-    background-color: $ns_blue_light;
+    background-color: $c_blue_light;
   }
   &.bg_red {
-    background-color: $ns_red_light;
+    background-color: $c_red_light;
   }
   &.c_white {
-    color: $ns_white;
+    color: $c_white;
   }
   &.w_full {
     width: 100%;
@@ -36,10 +36,10 @@ button {
   }
   &:hover {
     &.bg_blue {
-      background-color: $ns_blue_dark;
+      background-color: $c_blue_dark;
     }
     &.bg_red {
-      background-color: $ns_red_dark;
+      background-color: $c_red_dark;
     }
   }
 }

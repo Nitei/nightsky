@@ -1,8 +1,8 @@
 @import './variables.scss';
 
-.card {
+.card_ {
   border-radius: 5px;
-  background-color: $ns_sand_light;
-  box-shadow: 3px 3px 7px 0px $ns_gray;
+  background-color: $c_sand_light;
+  box-shadow: 3px 3px 7px 0px $c_gray;
   padding: 1rem;
 }
