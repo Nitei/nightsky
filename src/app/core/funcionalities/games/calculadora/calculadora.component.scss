@@ -1,47 +1,56 @@
-@import '../../../../styles/index.scss';
+@import "../../../../styles/index.scss";
 
-.inmense {
+.wrapper_calc {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  align-items: center;
 
-  .buttons {
-    display: flex;
-    padding: 0.5rem 0;
-    justify-content: space-between;
-    .type_game {
-      ns-button {
-        padding: 0 1rem 0 0;
-      }
-    }
-    .levels {
-      ns-button {
-        padding: 0 0 0 1rem;
-      }
-    }
-  }
-
-  .box-result {
+  .calc {
     width: 100%;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    &.win {
-      background-color: blue;
+
+    .calc_box {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+
+      .box_right,
+      .box_left {
+        width: 50%;
+
+        .box-result {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          
+          &.win {
+            background-color: blue;
+          }
+          &.lose {
+            background-color: red;
+          }
+        }
+      }
     }
-    &.lose {
-      background-color: red;
-      // color: white;
+    .buttons {
+      display: flex;
+      padding: 0.5rem 0;
+      justify-content: space-between;
+
+      .type_game {
+        ns-button {
+          padding: 0 1rem 0 0;
+        }
+      }
+      .levels {
+        ns-button {
+          padding: 0 0 0 1rem;
+        }
+      }
     }
   }
-
 }
-.box {
-  background-color: #73ffb9;
-}
-
-

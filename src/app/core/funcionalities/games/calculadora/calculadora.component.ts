@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs';
 import { TypeGameName } from '../../../../shared/types/type-games-names.type';
@@ -14,17 +14,17 @@ import { SelfDestroy } from '../../../../shared/abstract/self-destroy.class';
 } )
 export class CalculadoraComponent extends SelfDestroy implements OnInit, OnDestroy {
 
+  readonly gameTypesNames: TypeGameName[] = [ 'suma', 'resta', 'multiplicacion', 'division', ];
+  readonly gameTypesSymbols: TypeGameSymbol[] = [ '+', '-', 'x', '/' ];
+  private stopCheckResult: Subject<boolean> = new Subject();
   calculadora: FormGroup;
-  gameTypesNames: TypeGameName[] = [ 'suma', 'resta', 'multiplicacion', 'division', ];
-  gameTypesSymbols: TypeGameSymbol[] = [ '+', '-', 'x', '/' ];
   currentGameType: number;
   howManyNumbers: number = 1;
-  stopCheckResult: Subject<boolean> = new Subject();
   resultOperation: number;
 
   constructor(
     private fb: FormBuilder,
-    private utils: UtilsService,
+    private us: UtilsService,
   ) { super() }
 
   ngOnInit(): void {
@@ -32,17 +32,20 @@ export class CalculadoraComponent extends SelfDestroy implements OnInit, OnDestr
     this.initGame( 'suma' );
   }
 
-  capitalize( text: string ): string {
-    return this.utils.capitalizeText( text );
+  ngOnDestroy(): void {
+    this.stopCheckResult.next( true );
+    this.stopCheckResult.complete();
   }
 
-  initGame( game: TypeGameName ) {
-    this.currentGameType = this.gameTypesNames.findIndex( el => el === game );
-    this.initForm( this.howManyNumbers, game );
-  };
+  capitalize( text: string ): string {
+    return this.us.capitalizeText( text );
+  }
+
+  formGet( propName: string ) {
+    return this.calculadora.get( propName ).value;
+  }
 
   modifyHowManyNumbers( ev: '+' | '-' ) {
-    
     if ( ev === '-' && this.howManyNumbers > 1 ) {
       this.howManyNumbers--;
     } else if ( ev === '+' ) {
@@ -51,31 +54,31 @@ export class CalculadoraComponent extends SelfDestroy implements OnInit, OnDestr
     this.initForm( this.howManyNumbers, this.gameTypesNames[ this.currentGameType ] );
   }
 
-  ngOnDestroy(): void {
-    this.stopCheckResult.next( true );
-    this.stopCheckResult.complete();
-  }
+  initGame( game: TypeGameName ) {
+    this.currentGameType = this.gameTypesNames.findIndex( el => el === game );
+    this.initForm( this.howManyNumbers, game );
+  };
 
   private generateNumber( numDigit: number ): number {
     return parseFloat( ( Math.random() * ( numDigit * 10 ) ).toFixed( 0 ) );
   }
 
   private checkResult( result: number ) {
-    this.calculadora.get( 'result' ).valueChanges.pipe(takeUntil( this.stopCheckResult ) ).subscribe(
-        (data: string) => {
+    this.calculadora.get( 'result' ).valueChanges.pipe( takeUntil( this.stopCheckResult ) ).subscribe(
+      ( data: string ) => {
         if ( !data ) { return }
-          const resultLength = data.length > 0 ? data.length : this.reset();
-          if ( result ) {
-            if ( result.toString().length === resultLength ) {
-              if ( result === parseFloat( this.formGet( 'result' ) ) ) {
-                this.calculadora.get( 'status' ).setValue( true );
-              } else {
-                this.calculadora.get( 'status' ).setValue( false );
-              }
-              this.reset();
+        const resultLength = data.length > 0 ? data.length : this.reset();
+        if ( result ) {
+          if ( result.toString().length === resultLength ) {
+            if ( result === parseFloat( this.formGet( 'result' ) ) ) {
+              this.calculadora.get( 'status' ).setValue( true );
+            } else {
+              this.calculadora.get( 'status' ).setValue( false );
             }
+            this.reset();
           }
-        } )
+        }
+      } )
   };
 
   private getResult( TypeGameName: TypeGameName, firstN: string, secondN: string ): any {
@@ -105,10 +108,6 @@ export class CalculadoraComponent extends SelfDestroy implements OnInit, OnDestr
     } else {
       this.reset();
     };
-  }
-
-  private formGet( propName: string ) {
-    return this.calculadora.get( propName ).value;
   }
 
   private reset() {

@@ -1,42 +1,50 @@
-<div *ngIf="calculadora"
-  class="inmense box">
-
-  <div [formGroup]="calculadora">
-    <div [ngSwitch]="calculadora.get('TypeGameName').value">
-      <h1>Cuanto es {{calculadora.get('firstNumber').value}}
-        <span *ngFor="let game of gameTypesNames; let i = index">
-          <span *ngSwitchCase="game">{{gameTypesSymbols[i]}}</span>
-        </span>
-        {{calculadora.get('secondNumber').value}} ?
-        Nivel {{howManyNumbers}}
-      </h1>
-    </div>
-    <input formControlName="result"
-      nsOnlyNumber>
-  </div>
-
-  <div class="buttons">
-    <div class="type_game">
-      <ns-button *ngFor="let game of gameTypesNames"
-        [button]="{class: 'c_white w_normal bg_blue', label: capitalize(game)}"
-        (clicked)="initGame(game)"></ns-button>
-    </div>
-    <div class="levels">
-      <span>
-        <ns-button [button]="{class: 'c_white w_small bg_blue', label: '+'}"
-          (clicked)="modifyHowManyNumbers('+')"></ns-button>
-        <ns-button [button]="{class: 'c_white w_small bg_blue', label: '-'}"
-          (clicked)="modifyHowManyNumbers('-')"></ns-button>
-      </span>
-    </div>
-  </div>
-
-  <div class="box-result"
-    [ngClass]="{
-        'win': calculadora.get('status').value === true,
-        'lose': calculadora.get('status').value === false 
+<article class="wrapper_calc">
+  <div *ngIf="calculadora"
+    class="calc">
+    <div class="calc_box">
+      <!-- Texto e input -->
+      <div class="box_left">
+        <div [formGroup]="calculadora">
+          <div [ngSwitch]="formGet('TypeGameName')">
+            <h1>Cuanto es {{formGet('firstNumber')}}
+              <span *ngFor="let game of gameTypesNames; let i = index">
+                <span *ngSwitchCase="game">{{gameTypesSymbols[i]}}</span>
+              </span>
+              {{formGet('secondNumber')}} ?
+              Nivel {{howManyNumbers}}
+            </h1>
+          </div>
+          <input formControlName="result"
+            nsOnlyNumber>
+        </div>
+      </div>
+      <!-- Caja de resultados -->
+      <div class="box_right">
+        <div class="box-result win"
+          [ngClass]="{
+        'win': formGet('status') === true,
+        'lose': formGet('status') === false 
       }">
-    <h1 *ngIf="calculadora.get( 'status' ).value === true">GANASTE</h1>
-    <h1 *ngIf="calculadora.get( 'status' ).value === false">FALLASTE -> {{resultOperation}}</h1>
+          <h1 *ngIf="formGet( 'status' ) === true">GANASTE</h1>
+          <h1 *ngIf="formGet( 'status' ) === false">FALLASTE -> {{resultOperation}}</h1>
+        </div>
+      </div>
+    </div>
+    <!-- Botones -->
+    <div class="buttons">
+      <div class="type_game">
+        <ns-button *ngFor="let game of gameTypesNames"
+          [button]="{class: 'c_white w_normal bg_blue', label: capitalize(game)}"
+          (clicked)="initGame(game)"></ns-button>
+      </div>
+      <div class="levels">
+        <span>
+          <ns-button [button]="{class: 'c_white w_small bg_blue', label: '+'}"
+            (clicked)="modifyHowManyNumbers('+')"></ns-button>
+          <ns-button [button]="{class: 'c_white w_small bg_blue', label: '-'}"
+            (clicked)="modifyHowManyNumbers('-')"></ns-button>
+        </span>
+      </div>
+    </div>
   </div>
-</div>
+</article>
