@@ -3,15 +3,15 @@
 
   <div [formGroup]="calculadora">
     <div [ngSwitch]="calculadora.get('TypeGameName').value">
-      <h1>Cuando es {{calculadora.get('firstNumber').value}}
+      <h1>Cuanto es {{calculadora.get('firstNumber').value}}
         <span *ngFor="let game of gameTypesNames; let i = index">
           <span *ngSwitchCase="game">{{gameTypesSymbols[i]}}</span>
         </span>
         {{calculadora.get('secondNumber').value}} ?
+        Nivel {{howManyNumbers}}
       </h1>
     </div>
-    <!-- <input formControlName="result" nsOnlyNumber> -->
-    <input nsOnlyNumber>
+    <input formControlName="result" nsOnlyNumber>
   </div>
   <div class="box-result"
     [ngClass]="{
@@ -22,7 +22,22 @@
     <h1 *ngIf="calculadora.get( 'status' ).value === false">FALLASTE</h1>
   </div>
 
+  <div class="buttons">
+    <div class="type_game">
+      <ns-button *ngFor="let game of gameTypesNames"
+      [button]="{class: 'c_white w_normal bg_blue', label: capitalize(game)}"
+      (clicked)="initGame(game)"></ns-button>
+    </div>
+    <div class="levels">
+      <span>
+        <ns-button
+        [button]="{class: 'c_white w_small bg_blue', label: '+'}"
+        (clicked)="modifyHowManyNumbers('+')"></ns-button>
+        <ns-button
+        [button]="{class: 'c_white w_small bg_blue', label: '-'}"
+        (clicked)="modifyHowManyNumbers('-')"></ns-button>
+      </span>
+    </div>
+  </div>
+  
 </div>
-<ns-button *ngFor="let game of gameTypesNames"
-  [button]="{class: 'c_white w_normal bg_blue', label: capitalize(game)}"
-  (clicked)="initGame(game)"></ns-button>

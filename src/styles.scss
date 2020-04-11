@@ -2,8 +2,24 @@
 
 :root {
   font-size: 16px;
-  box-sizing: border-box;
 }
 html, body {
   margin: 0;
+}
+* {
+  box-sizing: border-box;
+  font-weight: initial;
+  font-family: Kaushan_Script;
+}
+@font-face {
+  font-family: ClickerScript;
+  src: url(assets/fonts/Clicker_Script/ClickerScript-Regular.ttf) format("opentype");
+}
+@font-face {
+  font-family: IndieFlower;
+  src: url(assets/fonts/Indie_Flower/IndieFlower-Regular.ttf) format("opentype");
+}
+@font-face {
+  font-family: Kaushan_Script;
+  src: url(assets/fonts/Kaushan_Script/KaushanScript-Regular.ttf) format("opentype");
 }

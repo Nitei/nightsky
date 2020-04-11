@@ -14,9 +14,10 @@ import { TypeGameSymbol } from '../../../../shared/types/type-games-symbols.type
 export class CalculadoraComponent implements OnInit, OnDestroy {
 
   calculadora: FormGroup;
-  gameTypesNames: TypeGameName[] = [ 'suma', 'resta', 'multiplicacion', 'division' ];
+  gameTypesNames: TypeGameName[] = [ 'suma', 'resta', 'multiplicacion', 'division', ];
   gameTypesSymbols: TypeGameSymbol[] = [ '+', '-', 'x', '/' ];
   currentGameType: number;
+  howManyNumbers: number = 1;
   stopCheckResult: Subject<boolean> = new Subject();
 
   constructor(
@@ -29,13 +30,24 @@ export class CalculadoraComponent implements OnInit, OnDestroy {
     this.initGame( 'suma' );
   }
 
-  capitalize(text: string): string {
+  capitalize( text: string ): string {
     return this.utils.capitalizeText( text );
   }
 
-  initGame(game: TypeGameName) {
-    this.initForm( 2, game );
+  initGame( game: TypeGameName ) {
+    this.currentGameType = this.gameTypesNames.findIndex( el => el === game );
+    this.initForm( this.howManyNumbers, game );
   };
+
+  modifyHowManyNumbers( ev: '+' | '-' ) {
+    
+    if ( ev === '-' && this.howManyNumbers > 1 ) {
+      this.howManyNumbers--;
+    } else if ( ev === '+' ) {
+      this.howManyNumbers++;
+    }
+    this.initForm( this.howManyNumbers, this.gameTypesNames[ this.currentGameType ] );
+  }
 
   ngOnDestroy(): void {
     this.stopCheckResult.next( true );
@@ -43,33 +55,32 @@ export class CalculadoraComponent implements OnInit, OnDestroy {
   }
 
   private generateNumber( numDigit: number ): number {
-
     return parseFloat( ( Math.random() * ( numDigit * 10 ) ).toFixed( 0 ) );
   }
 
   private checkResult( result: number ) {
-    this.calculadora.get( 'result' ).valueChanges.pipe(
-      takeUntil( this.stopCheckResult )
-    ).subscribe( data => {
-      if ( !data ) { return }
-      const resultLength = data.toString().length > 0 ? data.toString().length : this.reset();
-      if ( result ) {
-        if ( result.toString().length === resultLength ) {
-          if ( result === parseFloat( this.formGet( 'result' ) ) ) {
-            this.calculadora.get( 'status' ).setValue( true );
-          } else {
-            this.calculadora.get( 'status' ).setValue( false );
+    this.calculadora.get( 'result' ).valueChanges.pipe(takeUntil( this.stopCheckResult ) ).subscribe(
+        (data: string) => {
+        if ( !data ) { return }
+        console.log('%c log', 'color: red ;font-weight:bolder', data);
+          const resultLength = data.length > 0 ? data.length : this.reset();
+          if ( result ) {
+            if ( result.toString().length === resultLength ) {
+              if ( result === parseFloat( this.formGet( 'result' ) ) ) {
+                this.calculadora.get( 'status' ).setValue( true );
+              } else {
+                this.calculadora.get( 'status' ).setValue( false );
+              }
+              this.reset();
+            }
           }
-          this.reset();
-        }
-      }
-    } )
+        } )
   };
 
   private getResult( TypeGameName: TypeGameName, firstN: string, secondN: string ): any {
     let
-      firstNumber: number = parseFloat(firstN),
-      secondNumber: number = parseFloat(secondN),
+      firstNumber: number = parseFloat( firstN ),
+      secondNumber: number = parseFloat( secondN ),
       result: number;
     switch ( TypeGameName ) {
       case 'multiplicacion':
