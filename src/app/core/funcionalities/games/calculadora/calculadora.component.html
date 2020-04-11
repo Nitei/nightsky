@@ -1,6 +1,6 @@
 <article class="wrapper_calc">
   <div *ngIf="calculadora"
-    class="calc">
+    class="calc card">
     <div class="calc_box">
       <!-- Texto e input -->
       <div class="box_left">
@@ -14,8 +14,7 @@
               Nivel {{howManyNumbers}}
             </h1>
           </div>
-          <input formControlName="result"
-            nsOnlyNumber>
+          <input formControlName="result" nsOnlyNumber>
         </div>
       </div>
       <!-- Caja de resultados -->
