@@ -34,7 +34,6 @@ export class CalculadoraComponent implements OnInit, OnDestroy {
   }
 
   initGame(game: TypeGameName) {
-    // this.currentGameType === 3 ? this.currentGameType = 0 : this.currentGameType++;
     this.initForm( 2, game );
   };
 

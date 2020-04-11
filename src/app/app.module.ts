@@ -5,18 +5,16 @@ import { AppComponent } from './app.component';
 import { GamesModule } from './core/funcionalities/games/games.module';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-import { ButtonComponent } from './shared/components/button/button.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     GamesModule,
     BrowserModule,
     RouterModule,
     AppRoutingModule,
-
   ],
   providers: [],
   bootstrap: [AppComponent]
