@@ -8,9 +8,13 @@ html, body {
 }
 * {
   box-sizing: border-box;
-  font-weight: initial;
   font-family: Kaushan_Script;
 }
+h1, h2, h3, h4, h5, h6 {
+  margin: 0px;
+  font-weight: initial;
+}
+
 @font-face {
   font-family: ClickerScript;
   src: url(assets/fonts/Clicker_Script/ClickerScript-Regular.ttf) format("opentype");

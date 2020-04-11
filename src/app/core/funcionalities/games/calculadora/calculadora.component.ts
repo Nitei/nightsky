@@ -5,13 +5,14 @@ import { Subject } from 'rxjs';
 import { TypeGameName } from '../../../../shared/types/type-games-names.type';
 import { UtilsService } from '../../../../shared/services/utils.service';
 import { TypeGameSymbol } from '../../../../shared/types/type-games-symbols.type';
+import { SelfDestroy } from '../../../../shared/abstract/self-destroy.class';
 
 @Component( {
   selector: 'ns-calculadora',
   templateUrl: './calculadora.component.html',
   styleUrls: [ './calculadora.component.scss' ]
 } )
-export class CalculadoraComponent implements OnInit, OnDestroy {
+export class CalculadoraComponent extends SelfDestroy implements OnInit, OnDestroy {
 
   calculadora: FormGroup;
   gameTypesNames: TypeGameName[] = [ 'suma', 'resta', 'multiplicacion', 'division', ];
@@ -19,11 +20,12 @@ export class CalculadoraComponent implements OnInit, OnDestroy {
   currentGameType: number;
   howManyNumbers: number = 1;
   stopCheckResult: Subject<boolean> = new Subject();
+  resultOperation: number;
 
   constructor(
     private fb: FormBuilder,
     private utils: UtilsService,
-  ) { }
+  ) { super() }
 
   ngOnInit(): void {
     this.currentGameType = 3;
@@ -62,7 +64,6 @@ export class CalculadoraComponent implements OnInit, OnDestroy {
     this.calculadora.get( 'result' ).valueChanges.pipe(takeUntil( this.stopCheckResult ) ).subscribe(
         (data: string) => {
         if ( !data ) { return }
-        console.log('%c log', 'color: red ;font-weight:bolder', data);
           const resultLength = data.length > 0 ? data.length : this.reset();
           if ( result ) {
             if ( result.toString().length === resultLength ) {
@@ -98,7 +99,8 @@ export class CalculadoraComponent implements OnInit, OnDestroy {
       default:
         break;
     }
-    if ( result && ( result > 0 || result < 0 ) && result != null ) {
+    if ( result ) {
+      this.resultOperation = result;
       return result
     } else {
       this.reset();
@@ -113,7 +115,7 @@ export class CalculadoraComponent implements OnInit, OnDestroy {
     this.stopCheckResult.next( true );
     const timer = setTimeout( () => {
       this.stopCheckResult.next( false );
-      this.initForm( 1, 'suma' );
+      this.initForm( this.howManyNumbers, this.gameTypesNames[ this.currentGameType ] );
       clearTimeout( timer );
     }, 500 );
   };

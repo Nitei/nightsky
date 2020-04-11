@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 } )
 export class UtilsService {
 
-  constructor() {console.log(this.checkIsNumber(null)) }
+  constructor() {}
   
   capitalizeText( text: string ) {
     let lowercased = text.toLowerCase();

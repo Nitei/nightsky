@@ -22,27 +22,26 @@
       }
     }
   }
+
+  .box-result {
+    width: 100%;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    &.win {
+      background-color: blue;
+    }
+    &.lose {
+      background-color: red;
+      // color: white;
+    }
+  }
+
 }
 .box {
   background-color: #73ffb9;
 }
 
-h1 {
-  margin: 0;
-}
 
-.box-result {
-  width: 50%;
-  color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &.win {
-    background-color: blue;
-    color: white;
-  }
-  &.lose {
-    background-color: red;
-    color: white;
-  }
-}
