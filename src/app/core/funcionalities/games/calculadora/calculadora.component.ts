@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs';
@@ -10,7 +10,8 @@ import { SelfDestroy } from '../../../../shared/abstract/self-destroy.class';
 @Component( {
   selector: 'ns-calculadora',
   templateUrl: './calculadora.component.html',
-  styleUrls: [ './calculadora.component.scss' ]
+  styleUrls: [ './calculadora.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 } )
 export class CalculadoraComponent extends SelfDestroy implements OnInit, OnDestroy {
 
@@ -25,6 +26,7 @@ export class CalculadoraComponent extends SelfDestroy implements OnInit, OnDestr
   constructor(
     private fb: FormBuilder,
     private us: UtilsService,
+    private cdr: ChangeDetectorRef
   ) { super() }
 
   ngOnInit(): void {
@@ -115,6 +117,7 @@ export class CalculadoraComponent extends SelfDestroy implements OnInit, OnDestr
     const timer = setTimeout( () => {
       this.stopCheckResult.next( false );
       this.initForm( this.howManyNumbers, this.gameTypesNames[ this.currentGameType ] );
+      this.cdr.markForCheck();
       clearTimeout( timer );
     }, 500 );
   };
