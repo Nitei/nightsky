@@ -5,16 +5,16 @@ button {
   width: 11rem;
   height: 1.8rem;
   border-style: none;
-  color: white;
+  color: $c_blue_dark;
   font-size: 1rem;
   outline: none;
-  box-shadow: 0px 0px 8px 0px $c_black;
+  box-shadow: 0px 0px 8px 0px $c_blue_pale;
   &:active {
     transform: translateY(1px);
     box-shadow: none;
   }
   &.bg_blue {
-    background-color: $c_blue_light;
+    background-color: $c_blue_lightest;
   }
   &.bg_red {
     background-color: $c_red_light;
@@ -36,7 +36,7 @@ button {
   }
   &:hover {
     &.bg_blue {
-      background-color: $c_blue_dark;
+      background-color: $c_blue_lighter;
     }
     &.bg_red {
       background-color: $c_red_dark;

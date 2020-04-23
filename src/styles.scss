@@ -3,26 +3,45 @@
 
 :root {
   font-size: 16px;
-  background-color: $c_green_light;
+  background-color: $c_blue_darkest;
 }
 html,
 body {
   margin: 0;
   width: 100vw;
   height: 100vh;
+  background-image: url('./assets/img/Snowflake4.jpg');
+  background-size: cover;
 }
 * {
   box-sizing: border-box;
   font-family: Kaushan_Script;
 }
-h1,h2,h3,h4,h5,h6 {
+h1,h2,h3,h4,h5,h6, div, p, small {
   margin: 0px;
   font-weight: initial;
+  color: $c_blue_dark;
 }
 input {
-  border-radius: 15px;
+  border-radius: .5rem;
   line-height: 1rem;
   font-size: 1rem;
+}
+
+::-webkit-scrollbar {
+  width: .5rem;
+  height: .5rem;
+}
+body::-webkit-scrollbar-track {
+  background-color:  #2c2c2c;
+  border-radius: 3rem;
+}
+body::-webkit-scrollbar-thumb {
+  background-color:  #101ea0;
+  border-radius: 3rem;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background-color:  #3b4bdb;
 }
 
 @font-face {

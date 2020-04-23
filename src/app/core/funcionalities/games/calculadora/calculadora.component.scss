@@ -10,6 +10,9 @@
 
   .calc {
     width: 100%;
+    @extend .card_01;
+    background-image: url('../../../../../assets/img/SnowCard3.jpg');
+
 
     .calc_box {
       display: flex;
