@@ -5,10 +5,12 @@ import { AppComponent } from './app.component';
 import { GamesModule } from './core/funcionalities/games/games.module';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavbarComponent
   ],
   imports: [
     GamesModule,

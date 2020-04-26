@@ -14,7 +14,8 @@
               Nivel {{howManyNumbers}}
             </h1>
           </div>
-          <input formControlName="result" nsOnlyNumber>
+          <input formControlName="result"
+            nsOnlyNumber>
         </div>
       </div>
       <!-- Caja de resultados -->
@@ -31,19 +32,15 @@
     </div>
     <!-- Botones -->
     <div class="buttons">
-      <div class="type_game">
-        <ns-button *ngFor="let game of gameTypesNames"
-          [button]="{class: 'w_normal bg_blue', label: capitalize(game)}"
-          (clicked)="initGame(game)"></ns-button>
+      <div class="pair" *ngFor="let game of gameTypesNames; let i = index">
+        <ns-button
+        [button]="{class: 'w_normal bg_blue', label: capitalize(game)}"
+        (clicked)="initGame(game)"></ns-button>
       </div>
-      <div class="levels">
-        <span>
-          <ns-button [button]="{class: 'w_small bg_blue', label: '+'}"
-            (clicked)="modifyHowManyNumbers('+')"></ns-button>
-          <ns-button [button]="{class: 'w_small bg_blue', label: '-'}"
-            (clicked)="modifyHowManyNumbers('-')"></ns-button>
-        </span>
-      </div>
+      <ns-button [button]="{class: 'w_small bg_blue', label: '+'}"
+        (clicked)="modifyHowManyNumbers('+')"></ns-button>
+      <ns-button [button]="{class: 'w_small bg_blue', label: '-'}"
+        (clicked)="modifyHowManyNumbers('-')"></ns-button>
     </div>
   </div>
 </article>

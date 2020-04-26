@@ -1,0 +1,8 @@
+@import '../../utils/index';
+
+#root_wrapper {
+  height: 100vh;
+  padding: $navbar_height+1rem 1rem 1rem 1rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

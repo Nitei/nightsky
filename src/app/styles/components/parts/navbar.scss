@@ -1,0 +1,30 @@
+@import "../../utils/index";
+
+%container_size {
+  display: flex;
+  width: 100%;
+  height: $navbar_height;
+}
+
+ns-navbar {
+  @extend %container_size;
+  position: fixed;
+  top: 0;
+
+  .container_navbar {
+    @extend %container_size;
+    justify-content: space-between;
+    background-color: $c_white_lightest;
+    position: fixed;
+
+    .navbar_item {
+      height: inherit;
+      display: flex;
+      align-items: center;
+
+      .item_brand {
+        font-size: 2rem;
+      }
+    }
+  }
+}

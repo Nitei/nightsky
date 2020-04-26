@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import './app/styles/index';
+@import './app/styles/utils/index';
 
 :root {
   font-size: 16px;
@@ -10,13 +10,18 @@ body {
   margin: 0;
   width: 100vw;
   height: 100vh;
+}
+body {
   background-image: url('./assets/img/Snowflake4.jpg');
   background-size: cover;
+  background-attachment: fixed;
 }
+
 * {
   box-sizing: border-box;
   font-family: Kaushan_Script;
 }
+
 h1,h2,h3,h4,h5,h6, div, p, small {
   margin: 0px;
   font-weight: initial;

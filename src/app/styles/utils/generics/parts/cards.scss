@@ -1,8 +1,8 @@
-@import "./variables.scss";
+@import "../../../utils/variables/index";
 
 %card_base {
   border-radius: 5px;
-  box-shadow: -1px 3px 19px 12px $c_white;
+  box-shadow: -1px 3px 19px 12px $c_blue_lightest;
   padding: 1rem;
 }
 
@@ -10,4 +10,3 @@
   @extend %card_base;
   background-color: ghostwhite;
 }
-// #c1d1ed
