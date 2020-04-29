@@ -9,7 +9,6 @@
 
   .calc {
     width: 100%;
-    @extend .card_01;
     background-image: url("../../../../../assets/img/SnowCard3.jpg");
 
     .calc_box {
@@ -18,22 +17,17 @@
       padding: 0 0 1rem 0;
       width: 100%;
 
-      .box_right,
       .box_left {
         width: 50%;
-
-        .box-result {
-          width: 100%;
+        display: flex;
+        .input_time {
           display: flex;
-          justify-content: center;
-          align-items: center;
-          color: white;
-
-          &.win {
-            background-color: blue;
+          input {
+            margin: 0 2rem 0 0;
           }
-          &.lose {
-            background-color: red;
+          .chrono {
+            width: 5rem;
+            overflow: hidden;
           }
         }
       }
@@ -42,6 +36,24 @@
       display: flex;
       width: 100%;
       justify-content: space-between;
+    }
+  }
+
+  .results {
+    width: 100%;
+    background-image: url("../../../../../assets/img/SnowCard3.jpg");
+    table,
+    tr,
+    th,
+    td {
+      width: inherit;
+      text-align: inherit;
+    }
+    .win {
+      background-color: #8dfd8d;
+    }
+    .lose {
+      background-color: #f68383;
     }
   }
 }

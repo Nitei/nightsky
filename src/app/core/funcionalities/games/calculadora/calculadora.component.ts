@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators'
-import { Subject } from 'rxjs';
+import { Subject, interval } from 'rxjs';
 import { TypeGameName } from '../../../../shared/types/type-games-names.type';
 import { UtilsService } from '../../../../shared/services/utils.service';
 import { TypeGameSymbol } from '../../../../shared/types/type-games-symbols.type';
-import { SelfDestroy } from '../../../../shared/abstract/self-destroy.class';
+import { SubscriptionsFinisher } from '../../../../shared/abstract/subscriptions-finisher.class';
+import { ChronoStatus } from '../../../../shared/models/chrono.status.model';
 
 @Component( {
   selector: 'ns-calculadora',
@@ -13,15 +14,20 @@ import { SelfDestroy } from '../../../../shared/abstract/self-destroy.class';
   styleUrls: [ './calculadora.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush
 } )
-export class CalculadoraComponent extends SelfDestroy implements OnInit, OnDestroy {
+export class CalculadoraComponent extends SubscriptionsFinisher implements OnInit, OnDestroy {
 
   readonly gameTypesNames: TypeGameName[] = [ 'suma', 'resta', 'multiplicacion', 'division', ];
   readonly gameTypesSymbols: TypeGameSymbol[] = [ '+', '-', 'x', '/' ];
   private stopCheckResult: Subject<boolean> = new Subject();
+  // private chronoInterval: any;
+  // chronoTime: number = 0;
+  chrono: number;
+  chronoList: ChronoStatus[] = [];
   calculadora: FormGroup;
   currentGameType: number;
   howManyNumbers: number = 1;
   resultOperation: number;
+  showBtn = true;
 
   constructor(
     private fb: FormBuilder,
@@ -33,10 +39,10 @@ export class CalculadoraComponent extends SelfDestroy implements OnInit, OnDestr
     this.currentGameType = 3;
     this.initGame( 'suma' );
   }
-
+  
   ngOnDestroy(): void {
     this.stopCheckResult.next( true );
-    this.stopCheckResult.complete();
+    this.finishOnDestroySubs( ['stopCheckResult']);
   }
 
   capitalize( text: string ): string {
@@ -66,7 +72,7 @@ export class CalculadoraComponent extends SelfDestroy implements OnInit, OnDestr
   }
 
   private checkResult( result: number ) {
-    this.calculadora.get( 'result' ).valueChanges.pipe( takeUntil( this.stopCheckResult ) ).subscribe(
+    this.calculadora.get( 'result' ).valueChanges.pipe( takeUntil( this.stopCheckResult || this.finishOnDestroy$ ) ).subscribe(
       ( data: string ) => {
         if ( !data ) { return }
         const resultLength = data.length > 0 ? data.length : this.reset();
@@ -82,6 +88,14 @@ export class CalculadoraComponent extends SelfDestroy implements OnInit, OnDestr
         }
       } )
   };
+
+  // private initChrono() {
+  //   this.chronoTime = 0;
+  //   this.chronoInterval = setInterval(() => {
+  //     this.chronoTime++
+  //     this.cdr.detectChanges();
+  //   }, 10);
+  // }
 
   private getResult( TypeGameName: TypeGameName, firstN: string, secondN: string ): any {
     let
@@ -112,17 +126,34 @@ export class CalculadoraComponent extends SelfDestroy implements OnInit, OnDestr
     };
   }
 
+  getChronoNumber(): number {
+    const
+      chronoInit = this.chrono / 1000,
+      subtrac = +( Date.now() / 1000 - chronoInit ).toFixed( 2 )
+      ;
+    if ( subtrac > 60 ) {
+      return subtrac / 60
+    } else if ( subtrac > 3600 ) {
+      return subtrac / 3600
+    } else {
+      return subtrac
+    }
+  }
+
   private reset() {
-    this.stopCheckResult.next( true );
-    const timer = setTimeout( () => {
-      this.stopCheckResult.next( false );
-      this.initForm( this.howManyNumbers, this.gameTypesNames[ this.currentGameType ] );
-      this.cdr.markForCheck();
-      clearTimeout( timer );
-    }, 500 );
+    this.chronoList.push( { win: this.formGet( 'status' ), time: this.getChronoNumber() } );
+      this.stopCheckResult.next( true );
+      const timer = setTimeout( () => {
+        this.stopCheckResult.next( false );
+        this.initForm( this.howManyNumbers, this.gameTypesNames[ this.currentGameType ] );
+        this.cdr.markForCheck();
+        clearTimeout( timer );
+      }, 500 );
   };
 
   private initForm( howManyNumbers: number, TypeGameName: TypeGameName ) {
+    // this.initChrono();
+
     this.calculadora = this.fb.group( {
       firstNumber: this.fb.control( this.generateNumber( howManyNumbers ) ),
       secondNumber: this.fb.control( this.generateNumber( howManyNumbers ) ),
@@ -130,6 +161,8 @@ export class CalculadoraComponent extends SelfDestroy implements OnInit, OnDestr
       status: this.fb.control( null ),
       TypeGameName: this.fb.control( TypeGameName ),
     } );
+
+    this.chrono = Date.now();
 
     this.checkResult(
       this.getResult(
