@@ -17,42 +17,40 @@
           </div>
           <input formControlName="result"
             nsOnlyNumber>
-            
-          <!-- <div class="input_time">
-              <div class="chrono">
-                <h5>{{chronoTime}}</h5>
-              </div>
-            <h5>Milisegundos</h5>
-          </div> -->
         </div>
       </div>
     </div>
     <!-- Botones -->
     <div class="buttons">
-      <div *ngIf="(us.deviceType$.type | async) !== 'mobile'">
-        <div class="pair" *ngFor="let game of gameTypesNames; let i = index">
+      <div class="wrapper">
+        <div class="pair"
+          *ngFor="let game of gameTypesNames; let i = index">
           <ns-button [button]="{class: 'w_normal bg_blue', label: capitalize(game)}"
-          (clicked)="initGame(game)"></ns-button>
+            (clicked)="initGame(game)"></ns-button>
         </div>
       </div>
-      <div *ngIf="(us.deviceType$.type | async) === 'mobile'">
-        <div class="pair" *ngFor="let game of gameTypesNames; let i = index">
-          <ns-button *ngFor="let game of gameTypesNames; let i = index" [button]="{class: 'w_normal bg_blue', label: capitalize(game)}"
-          (clicked)="initGame(game)"></ns-button>
+      <div>
+      </div>
+      <div class="wrapper">
+        <div class="pair">
+          <ns-button [button]="{class: 'w_small bg_blue', label: '+'}"
+            (clicked)="modifyHowManyNumbers('+')"></ns-button>
+        </div>
+        <div class="pair">
+          <ns-button [button]="{class: 'w_small bg_blue', label: '-'}"
+            (clicked)="modifyHowManyNumbers('-')"></ns-button>
         </div>
       </div>
-      <ns-button [button]="{class: 'w_small bg_blue', label: '+'}"
-        (clicked)="modifyHowManyNumbers('+')"></ns-button>
-      <ns-button [button]="{class: 'w_small bg_blue', label: '-'}"
-        (clicked)="modifyHowManyNumbers('-')"></ns-button>
     </div>
   </section>
+
+  <!-- RESULTADOS -->
   <section class="results card_01">
     <h2>Resultados</h2>
     <table>
       <tr>
         <th>
-          <h4>Tiempos</h4>
+          <h4>Tiempo</h4>
         </th>
         <th>
           <h4>Elección</h4>
@@ -73,4 +71,3 @@
     </table>
   </section>
 </article>
-

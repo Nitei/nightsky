@@ -22,18 +22,11 @@ export class UtilsService extends SubscriptionsFinisher {
 
   getWindowSize() {
     const checkWidth = ( x: number ): DeviceInfoType => {
-      switch ( true ) {
-        case x > 768:
-          return "desktop";
-        case x <= 768 && x > 425:
-          return "tablet";
-        case x <= 425:
-          return "mobile";
-      }
+      if ( x > 768 ) return "desktop";
+      if ( x <= 768 && x > 425 ) return "tablet";
+      if ( x <= 425 ) return "mobile";
     }
-
     let device: DeviceInfo = new DeviceInfo( checkWidth( window.innerWidth ), window.innerWidth );
-    console.log(device)
     fromEvent( window, 'resize' ).pipe(
       takeUntil( this.finishTakeUntil$ ),
       pluck( 'target', 'innerWidth' ),
@@ -43,7 +36,6 @@ export class UtilsService extends SubscriptionsFinisher {
         this.deviceType$.next( device );
       } )
     ).subscribe()
-
   }
 
   capitalizeText( text: string ) {
