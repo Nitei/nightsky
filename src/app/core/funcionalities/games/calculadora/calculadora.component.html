@@ -29,15 +29,17 @@
     </div>
     <!-- Botones -->
     <div class="buttons">
-      <div class="pair"
-        *ngFor="let game of gameTypesNames; let i = index">
-        <ns-button [button]="{class: 'w_normal bg_blue', label: capitalize(game)}"
+      <div *ngIf="(us.deviceType$.type | async) !== 'mobile'">
+        <div class="pair" *ngFor="let game of gameTypesNames; let i = index">
+          <ns-button [button]="{class: 'w_normal bg_blue', label: capitalize(game)}"
           (clicked)="initGame(game)"></ns-button>
+        </div>
       </div>
-      <div class="pair"
-        *ngFor="let game of gameTypesNames; let i = index">
-        <ns-button [button]="{class: 'w_normal bg_blue', label: capitalize(game)}"
+      <div *ngIf="(us.deviceType$.type | async) === 'mobile'">
+        <div class="pair" *ngFor="let game of gameTypesNames; let i = index">
+          <ns-button *ngFor="let game of gameTypesNames; let i = index" [button]="{class: 'w_normal bg_blue', label: capitalize(game)}"
           (clicked)="initGame(game)"></ns-button>
+        </div>
       </div>
       <ns-button [button]="{class: 'w_small bg_blue', label: '+'}"
         (clicked)="modifyHowManyNumbers('+')"></ns-button>

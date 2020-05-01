@@ -38,7 +38,6 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
   ngOnInit(): void {
     this.currentGameType = 3;
     this.initGame( 'suma' );
-    this.us.initObservables()
   }
 
 
@@ -113,7 +112,6 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
       default:
         break;
     }
-    console.log( result )
     this.resultOperation = result;
     return result
   }
