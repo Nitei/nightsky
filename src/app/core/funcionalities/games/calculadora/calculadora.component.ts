@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators'
 import { Subject, interval } from 'rxjs';
 import { TypeGameName } from '../../../../shared/types/type-games-names.type';
-import { UtilsService } from '../../../../shared/services/utils.service';
+import { UtilsService } from '../../../../shared/services/utils/utils.service';
 import { TypeGameSymbol } from '../../../../shared/types/type-games-symbols.type';
 import { SubscriptionsFinisher } from '../../../../shared/abstract/subscriptions-finisher.class';
 import { ChronoStatus } from '../../../../shared/models/chrono.status.model';
@@ -38,11 +38,14 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
   ngOnInit(): void {
     this.currentGameType = 3;
     this.initGame( 'suma' );
+    this.us.initObservables()
   }
-  
+
+
+
   ngOnDestroy(): void {
     this.stopCheckResult.next( true );
-    this.finishOnDestroySubs( ['stopCheckResult']);
+    this.finishSubscriptions( this.stopCheckResult );
   }
 
   capitalize( text: string ): string {
@@ -72,7 +75,7 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
   }
 
   private checkResult( result: number ) {
-    this.calculadora.get( 'result' ).valueChanges.pipe( takeUntil( this.stopCheckResult || this.finishOnDestroy$ ) ).subscribe(
+    this.calculadora.get( 'result' ).valueChanges.pipe( takeUntil( this.stopCheckResult ) ).subscribe(
       ( data: string ) => {
         if ( !data ) { return }
         const resultLength = data.length > 0 ? data.length : this.reset();
@@ -88,14 +91,6 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
         }
       } )
   };
-
-  // private initChrono() {
-  //   this.chronoTime = 0;
-  //   this.chronoInterval = setInterval(() => {
-  //     this.chronoTime++
-  //     this.cdr.detectChanges();
-  //   }, 10);
-  // }
 
   private getResult( TypeGameName: TypeGameName, firstN: string, secondN: string ): any {
     let
@@ -118,12 +113,9 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
       default:
         break;
     }
-    if ( result ) {
-      this.resultOperation = result;
-      return result
-    } else {
-      this.reset();
-    };
+    console.log( result )
+    this.resultOperation = result;
+    return result
   }
 
   getChronoNumber(): number {
@@ -141,19 +133,16 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
   }
 
   private reset() {
-    this.chronoList.push( { win: this.formGet( 'status' ), time: this.getChronoNumber() } );
-      this.stopCheckResult.next( true );
-      const timer = setTimeout( () => {
-        this.stopCheckResult.next( false );
-        this.initForm( this.howManyNumbers, this.gameTypesNames[ this.currentGameType ] );
-        this.cdr.markForCheck();
-        clearTimeout( timer );
-      }, 500 );
+    this.chronoList.unshift( { win: this.formGet( 'status' ), time: this.getChronoNumber(), result: this.resultOperation, election: this.formGet('result') } );
+    this.stopCheckResult.next();
+    const timer = setTimeout( () => {
+      this.initForm( this.howManyNumbers, this.gameTypesNames[ this.currentGameType ] );
+      this.cdr.markForCheck();
+      clearTimeout( timer );
+    }, 500 );
   };
 
   private initForm( howManyNumbers: number, TypeGameName: TypeGameName ) {
-    // this.initChrono();
-
     this.calculadora = this.fb.group( {
       firstNumber: this.fb.control( this.generateNumber( howManyNumbers ) ),
       secondNumber: this.fb.control( this.generateNumber( howManyNumbers ) ),

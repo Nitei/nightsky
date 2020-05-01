@@ -34,6 +34,11 @@
         <ns-button [button]="{class: 'w_normal bg_blue', label: capitalize(game)}"
           (clicked)="initGame(game)"></ns-button>
       </div>
+      <div class="pair"
+        *ngFor="let game of gameTypesNames; let i = index">
+        <ns-button [button]="{class: 'w_normal bg_blue', label: capitalize(game)}"
+          (clicked)="initGame(game)"></ns-button>
+      </div>
       <ns-button [button]="{class: 'w_small bg_blue', label: '+'}"
         (clicked)="modifyHowManyNumbers('+')"></ns-button>
       <ns-button [button]="{class: 'w_small bg_blue', label: '-'}"
@@ -47,6 +52,12 @@
         <th>
           <h4>Tiempos</h4>
         </th>
+        <th>
+          <h4>Elección</h4>
+        </th>
+        <th>
+          <h4>Resultado</h4>
+        </th>
       </tr>
       <tr [ngClass]="{
         'win': result?.win === true,
@@ -54,7 +65,10 @@
       }"
         *ngFor="let result of chronoList">
         <td>{{result?.time}} s</td>
+        <td>{{result?.election}}</td>
+        <td>{{result?.result}}</td>
       </tr>
     </table>
   </section>
 </article>
+

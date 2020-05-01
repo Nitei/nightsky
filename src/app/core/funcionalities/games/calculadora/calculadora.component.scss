@@ -42,12 +42,14 @@
   .results {
     width: 100%;
     background-image: url("../../../../../assets/img/SnowCard3.jpg");
-    table,
+    table {
+      width: inherit;
+    }
     tr,
     th,
     td {
-      width: inherit;
-      text-align: inherit;
+      width: 33%;
+      text-align: center;
     }
     .win {
       background-color: #8dfd8d;
