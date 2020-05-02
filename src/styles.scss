@@ -3,12 +3,14 @@
 
 :root {
   font-size: 16px;
-  transition: font-size 1s;
-  @media (max-width: 768px) {
+  @media (min-width: 768px) {
     font-size: 20px;
 }
+  @media (max-width: 768px) {
+    font-size: 16px;
+}
   @media (max-width: 425px) {
-    font-size: 20px;
+    font-size: 18px;
 }
 }
 html,
@@ -24,8 +26,9 @@ body {
 }
 
 * {
-  box-sizing: border-box;
   font-family: Kaushan_Script;
+  box-sizing: border-box;
+  transition: all $transition_time;
 }
 
 h1,h2,h3,h4,h5,h6, div, p, small {

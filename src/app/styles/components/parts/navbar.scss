@@ -16,6 +16,7 @@ ns-navbar {
     justify-content: space-between;
     background-color: $c_white_lightest;
     position: fixed;
+    padding: 0 1rem;
 
     .navbar_item {
       height: inherit;
