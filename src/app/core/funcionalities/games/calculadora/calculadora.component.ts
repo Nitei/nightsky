@@ -19,8 +19,6 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
   readonly gameTypesNames: TypeGameName[] = [ 'suma', 'resta', 'multiplicacion', 'division', ];
   readonly gameTypesSymbols: TypeGameSymbol[] = [ '+', '-', 'x', '/' ];
   private stopCheckResult: Subject<boolean> = new Subject();
-  // private chronoInterval: any;
-  // chronoTime: number = 0;
   chrono: number;
   chronoList: ChronoStatus[] = [];
   calculadora: FormGroup;
@@ -39,8 +37,6 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
     this.currentGameType = 3;
     this.initGame( 'suma' );
   }
-
-
 
   ngOnDestroy(): void {
     this.stopCheckResult.next( true );
@@ -77,7 +73,7 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
     this.calculadora.get( 'result' ).valueChanges.pipe( takeUntil( this.stopCheckResult ) ).subscribe(
       ( data: string ) => {
         if ( !data ) { return }
-        const resultLength = data.length > 0 ? data.length : this.reset();
+        const resultLength = data.length > 0 ? data.length : this.reset(true);
         if ( result ) {
           if ( result.toString().length === resultLength ) {
             if ( result === parseFloat( this.formGet( 'result' ) ) ) {
@@ -85,7 +81,7 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
             } else {
               this.calculadora.get( 'status' ).setValue( false );
             }
-            this.reset();
+            this.reset(true);
           }
         }
       } )
@@ -112,8 +108,13 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
       default:
         break;
     }
-    this.resultOperation = result;
-    return result
+    if ( result === Infinity
+      || result === 0 ) { 
+      this.reset(true);
+    } else {
+      this.resultOperation = result;
+      return result
+    }
   }
 
   getChronoNumber(): number {
@@ -130,21 +131,27 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
     }
   }
 
-  private reset() {
-    this.chronoList.unshift( { win: this.formGet( 'status' ), time: this.getChronoNumber(), result: this.resultOperation, election: this.formGet('result') } );
-    this.stopCheckResult.next();
+  /**
+   * @param invalidResult if result is invalid reset game fast
+   */
+  private reset( invalidResult?: boolean ) {
+    if (!invalidResult) { 
+      this.chronoList.unshift( { win: this.formGet( 'status' ), time: this.getChronoNumber(), result: this.resultOperation, election: this.formGet('result') } );
+      this.stopCheckResult.next(true);
+    }
     const timer = setTimeout( () => {
+      this.stopCheckResult.next(false);
       this.initForm( this.howManyNumbers, this.gameTypesNames[ this.currentGameType ] );
       this.cdr.markForCheck();
       clearTimeout( timer );
-    }, 500 );
+    }, invalidResult ? 0 : 500 );
   };
 
   private initForm( howManyNumbers: number, TypeGameName: TypeGameName ) {
     this.calculadora = this.fb.group( {
       firstNumber: this.fb.control( this.generateNumber( howManyNumbers ) ),
       secondNumber: this.fb.control( this.generateNumber( howManyNumbers ) ),
-      result: '',
+      result: null,
       status: this.fb.control( null ),
       TypeGameName: this.fb.control( TypeGameName ),
     } );
