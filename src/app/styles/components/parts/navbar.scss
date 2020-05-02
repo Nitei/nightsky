@@ -22,10 +22,29 @@ ns-navbar {
       height: inherit;
       display: flex;
       align-items: center;
+    }
+    .item_part {
+      display: inherit;
+      height: inherit;
 
-      .item_brand {
-        font-size: 2rem;
+      .part_item {
+        display: inherit;
+        height: inherit;
+
+        .item_brand {
+          
+          display: inherit;
+          height: inherit;
+          align-items: center;
+          margin: 0 1rem 0 0;
+        }
       }
     }
+  }
+
+  .item_brand:hover {
+    height: inherit;
+    background-color: gray;
+    color: ghostwhite;
   }
 }

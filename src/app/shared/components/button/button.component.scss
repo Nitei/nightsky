@@ -14,11 +14,9 @@ button {
     box-shadow: none;
   }
   &.bg_blue {
-    transition: background-color $transition_time;
     background-color: $c_blue_lightest;
   }
   &.bg_red {
-    transition: background-color $transition_time;
     background-color: $c_red_light;
   }
   &.c_white {

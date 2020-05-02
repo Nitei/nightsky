@@ -3,7 +3,8 @@ import { CompletableObservable } from './subscription-finisher.type';
 
 /** 
  * Use in ngOndestroy for finish all subscriptions
- * @method finishSubscriptions 
+ * @property finishTakeUntil$ Use in takeUntil for finish him
+ * @method finishSubscriptions pass observables or subscriptions for finish him
  */
 export abstract class SubscriptionsFinisher {
 

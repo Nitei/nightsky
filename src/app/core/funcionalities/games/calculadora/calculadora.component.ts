@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators'
-import { Subject, interval } from 'rxjs';
+import { Subject } from 'rxjs';
 import { TypeGameName } from '../../../../shared/types/type-games-names.type';
 import { UtilsService } from '../../../../shared/services/utils/utils.service';
 import { TypeGameSymbol } from '../../../../shared/types/type-games-symbols.type';
@@ -18,14 +18,13 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
 
   readonly gameTypesNames: TypeGameName[] = [ 'suma', 'resta', 'multiplicacion', 'division', ];
   readonly gameTypesSymbols: TypeGameSymbol[] = [ '+', '-', 'x', '/' ];
-  private stopCheckResult: Subject<boolean> = new Subject();
+  private stopCheckResult: Subject<void> = new Subject();
   chrono: number;
   chronoList: ChronoStatus[] = [];
   calculadora: FormGroup;
   currentGameType: number;
   howManyNumbers: number = 1;
   resultOperation: number;
-  showBtn = true;
 
   constructor(
     private fb: FormBuilder,
@@ -39,7 +38,7 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
   }
 
   ngOnDestroy(): void {
-    this.stopCheckResult.next( true );
+    this.stopCheckResult.next();
     this.finishSubscriptions( this.stopCheckResult );
   }
 
@@ -60,63 +59,89 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
     this.initForm( this.howManyNumbers, this.gameTypesNames[ this.currentGameType ] );
   }
 
-  initGame( game: TypeGameName ) {
+  private initGame( game: TypeGameName ) {
     this.currentGameType = this.gameTypesNames.findIndex( el => el === game );
     this.initForm( this.howManyNumbers, game );
   };
 
+  /**
+   * Genera un numero aleatorio
+   * @param numDigit Cantidad de numeros modificados por los botones de Nivel -> modifyHowManyNumbers()
+   * @return Number
+   */
   private generateNumber( numDigit: number ): number {
-    return parseFloat( ( Math.random() * ( numDigit * 10 ) ).toFixed( 0 ) );
+    return parseInt( ( Math.random() * ( numDigit * 10 ) ).toString() );
   }
 
+  /**
+   * Conseguimos numeros validos para el formulario del juego
+   * @param howManyNumbers Cantidad de numeros modificados por los botones de Nivel -> modifyHowManyNumbers()
+   * @param TypeGameName sumar | restar | multiplicacion | division
+   */
+  private generateNumbersGame( howManyNumbers, TypeGameName ) {
+    const
+      firstNumber = this.generateNumber( howManyNumbers ),
+      secondNumber = this.generateNumber( howManyNumbers ),
+      resultGenerated = this.getFinalResult( TypeGameName, firstNumber, secondNumber ),
+      invalidResults = [ Infinity, 0 ]
+      ;
+    if ( !invalidResults.some( x => x === resultGenerated ) )
+      return {
+        firstNumber,
+        secondNumber,
+        resultGenerated
+      }
+  }
+
+  /**
+   * Comprobamos el resultado final con el valor del input
+   * @param result Resultado obtenido del metodo getFinalResult()
+   */
   private checkResult( result: number ) {
     this.calculadora.get( 'result' ).valueChanges.pipe( takeUntil( this.stopCheckResult ) ).subscribe(
-      ( data: string ) => {
-        if ( !data ) { return }
-        const resultLength = data.length > 0 ? data.length : this.reset(true);
-        if ( result ) {
-          if ( result.toString().length === resultLength ) {
-            if ( result === parseFloat( this.formGet( 'result' ) ) ) {
-              this.calculadora.get( 'status' ).setValue( true );
-            } else {
-              this.calculadora.get( 'status' ).setValue( false );
-            }
-            this.reset(true);
-          }
+      ( inputValue: string ) => {
+        // Si no hay valores en el input no continuamos
+        if ( inputValue.length === 0 ) { return }
+        // Para poder guardar el valor como resultado ambos tienen que tener al menos la misma cantidad de digitos
+        if ( result?.toString().length === inputValue.length ) {
+          this.calculadora.get( 'status' ).setValue( result === +inputValue ? true : false );
+          this.reset();
         }
       } )
   };
 
-  private getResult( TypeGameName: TypeGameName, firstN: string, secondN: string ): any {
-    let
-      firstNumber: number = parseFloat( firstN ),
-      secondNumber: number = parseFloat( secondN ),
-      result: number;
+  /**
+   * Obtenemos el resultado en  base a el tipo de juego y los operandos antes de inicializar el formulario
+   * @param TypeGameName sumar | restar | multiplicacion | division
+   * @param firstN Primer operando
+   * @param secondN Segundo operando
+   * @return Retorna el resultado final de la operacion
+   */
+  private getFinalResult( TypeGameName: TypeGameName, firstN: number, secondN: number ): number {
+    let result: number;
     switch ( TypeGameName ) {
       case 'multiplicacion':
-        result = firstNumber * secondNumber;
+        result = firstN * secondN;
         break;
       case 'division':
-        result = parseFloat( ( firstNumber / secondNumber ).toFixed( 1 ) );
+        result = parseFloat( ( firstN / secondN ).toFixed( 1 ) );
         break;
       case 'suma':
-        result = firstNumber + secondNumber;
+        result = firstN + secondN;
         break;
       case 'resta':
-        result = firstNumber - secondNumber;
+        result = firstN - secondN;
         break;
       default:
         break;
     }
-    if ( result === Infinity
-      || result === 0 ) { 
-      this.reset(true);
-    } else {
-      this.resultOperation = result;
-      return result
-    }
+    this.resultOperation = result;
+    return result
   }
 
+  /**
+   * Consigue el tiempo en minutos u horas desde el inicio del juego
+   */
   getChronoNumber(): number {
     const
       chronoInit = this.chrono / 1000,
@@ -132,38 +157,34 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
   }
 
   /**
-   * @param invalidResult if result is invalid reset game fast
+   * Reset game
    */
-  private reset( invalidResult?: boolean ) {
-    if (!invalidResult) { 
-      this.chronoList.unshift( { win: this.formGet( 'status' ), time: this.getChronoNumber(), result: this.resultOperation, election: this.formGet('result') } );
-      this.stopCheckResult.next(true);
-    }
+  private reset() {
+    this.chronoList.unshift( { win: this.formGet( 'status' ), time: this.getChronoNumber(), result: this.resultOperation, election: this.formGet( 'result' ) } );
+    this.stopCheckResult.next();
     const timer = setTimeout( () => {
-      this.stopCheckResult.next(false);
       this.initForm( this.howManyNumbers, this.gameTypesNames[ this.currentGameType ] );
       this.cdr.markForCheck();
       clearTimeout( timer );
-    }, invalidResult ? 0 : 500 );
+    }, 500 );
   };
 
+  /**
+   * Inicializa el formulario
+   * @param howManyNumbers Cantidad de numeros modificados por los botones de Nivel -> modifyHowManyNumbers()
+   * @param TypeGameName sumar | restar | multiplicacion | division
+   */
   private initForm( howManyNumbers: number, TypeGameName: TypeGameName ) {
+    const numbersForm = this.generateNumbersGame( howManyNumbers, TypeGameName ) ?? this.generateNumbersGame( howManyNumbers, TypeGameName );
     this.calculadora = this.fb.group( {
-      firstNumber: this.fb.control( this.generateNumber( howManyNumbers ) ),
-      secondNumber: this.fb.control( this.generateNumber( howManyNumbers ) ),
+      firstNumber: numbersForm.firstNumber,
+      secondNumber: numbersForm.secondNumber,
       result: null,
       status: this.fb.control( null ),
       TypeGameName: this.fb.control( TypeGameName ),
     } );
-
     this.chrono = Date.now();
-
-    this.checkResult(
-      this.getResult(
-        this.formGet( 'TypeGameName' ),
-        this.formGet( 'firstNumber' ),
-        this.formGet( 'secondNumber' ) )
-    );
+    this.checkResult( numbersForm.resultGenerated );
   };
 
 }
