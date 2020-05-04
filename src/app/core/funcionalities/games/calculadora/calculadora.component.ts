@@ -7,6 +7,7 @@ import { UtilsService } from '../../../../shared/services/utils/utils.service';
 import { TypeGameSymbol } from '../../../../shared/types/type-games-symbols.type';
 import { SubscriptionsFinisher } from '../../../../shared/abstract/subscriptions-finisher.class';
 import { ChronoStatus } from '../../../../shared/models/chrono.status.model';
+import { ChronoStatusTime } from '../../../../shared/models/chrono-status-time.model';
 
 @Component( {
   selector: 'ns-calculadora',
@@ -142,18 +143,20 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
   /**
    * Consigue el tiempo en minutos u horas desde el inicio del juego
    */
-  getChronoNumber(): number {
-    const
-      chronoInit = this.chrono / 1000,
-      subtrac = +( Date.now() / 1000 - chronoInit ).toFixed( 2 )
+  getChronoNumber(): ChronoStatusTime {
+    let
+      timeUsed = Date.now() - this.chrono,
+      seconds = timeUsed / 1000,
+      intSeconds = parseInt( seconds.toString() )
       ;
-    if ( subtrac > 60 ) {
-      return subtrac / 60
-    } else if ( subtrac > 3600 ) {
-      return subtrac / 3600
+    if ( intSeconds > 3600 ) {
+      return new ChronoStatusTime(+( seconds / 3600 ).toFixed( 2 ), 'hrs');
+    } else if ( intSeconds > 60 ) {
+      return new ChronoStatusTime(+( seconds / 60 ).toFixed( 2 ), 'min');
     } else {
-      return subtrac
+      return new ChronoStatusTime( +seconds.toFixed( 2 ), 'seg');
     }
+
   }
 
   /**

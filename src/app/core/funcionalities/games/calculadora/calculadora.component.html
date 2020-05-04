@@ -64,7 +64,7 @@
         'lose': result?.win === false 
       }"
         *ngFor="let result of chronoList">
-        <td>{{result?.time}} s</td>
+        <td>{{result?.time.chrono}} {{result?.time?.label}}</td>
         <td>{{result?.election}}</td>
         <td>{{result?.result}}</td>
       </tr>
