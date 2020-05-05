@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs';
@@ -8,6 +8,7 @@ import { TypeGameSymbol } from '../../../../shared/types/type-games-symbols.type
 import { SubscriptionsFinisher } from '../../../../shared/abstract/subscriptions-finisher.class';
 import { ChronoStatus } from '../../../../shared/models/chrono.status.model';
 import { ChronoStatusTime } from '../../../../shared/models/chrono-status-time.model';
+import { ChronoStatusTimeLabelType } from '../../../../shared/types/chrono-status-time-label.type';
 
 @Component( {
   selector: 'ns-calculadora',
@@ -15,7 +16,7 @@ import { ChronoStatusTime } from '../../../../shared/models/chrono-status-time.m
   styleUrls: [ './calculadora.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush
 } )
-export class CalculadoraComponent extends SubscriptionsFinisher implements OnInit, OnDestroy {
+export class CalculadoraComponent extends SubscriptionsFinisher implements OnInit {
 
   readonly gameTypesNames: TypeGameName[] = [ 'suma', 'resta', 'multiplicacion', 'division', ];
   readonly gameTypesSymbols: TypeGameSymbol[] = [ '+', '-', 'x', '/' ];
@@ -39,7 +40,6 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
   }
 
   ngOnDestroy(): void {
-    this.stopCheckResult.next();
     this.finishSubscriptions( this.stopCheckResult );
   }
 
@@ -60,7 +60,7 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
     this.initForm( this.howManyNumbers, this.gameTypesNames[ this.currentGameType ] );
   }
 
-  private initGame( game: TypeGameName ) {
+  initGame( game: TypeGameName ) {
     this.currentGameType = this.gameTypesNames.findIndex( el => el === game );
     this.initForm( this.howManyNumbers, game );
   };
@@ -145,18 +145,69 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
    */
   getChronoNumber(): ChronoStatusTime {
     let
-      timeUsed = Date.now() - this.chrono,
-      seconds = timeUsed / 1000,
-      intSeconds = parseInt( seconds.toString() )
+      seconds = 80.9546,
+      timeLabel: ChronoStatusTimeLabelType = 'seg',
+      finalStr: any
       ;
-    if ( intSeconds > 3600 ) {
-      return new ChronoStatusTime(+( seconds / 3600 ).toFixed( 2 ), 'hrs');
-    } else if ( intSeconds > 60 ) {
-      return new ChronoStatusTime(+( seconds / 60 ).toFixed( 2 ), 'min');
-    } else {
-      return new ChronoStatusTime( +seconds.toFixed( 2 ), 'seg');
-    }
 
+    const checkTime = () => {
+      const
+        timeUsed = Date.now() - this.chrono,
+        secondsStr = seconds.toString(),
+        // seconds = timeUsed / 1000,
+        idxPoint = secondsStr.indexOf( '.' ),
+        twoDigitsSeconds = secondsStr.slice( idxPoint + 1, idxPoint + 3 )
+        ;
+
+      const checkOps = () => {
+        if ( +seconds.toString().slice(
+          seconds.toString().indexOf( '.' ) + 1,
+          seconds.toString().indexOf( '.' ) + 3
+        ) >= 60 ) {
+          checkTime();
+        }
+        if ( (
+          +seconds.toString().slice(
+            0,
+            seconds.toString().indexOf( '.' )
+          )
+        ) >= 60 ) {
+          checkTime();
+        }
+      }
+      if ( +twoDigitsSeconds >= 60 ) {
+        seconds -= 0.6;
+        seconds += 1;
+      }
+      if ( seconds >= 3600 ) {
+        seconds /= 3600;
+        timeLabel = 'hrs';
+        checkOps()
+      } else if ( seconds >= 60 ) {
+        seconds /= 60;
+        timeLabel = 'min';
+        checkOps()
+      } else {
+        timeLabel = 'seg';
+        checkOps()
+      }
+    }
+    checkTime();
+
+
+    const
+      copySeconds = seconds.toString(),
+      idxDot = copySeconds.indexOf( '.' ),
+      intergerPart = copySeconds.slice( 0, idxDot ), //  12
+      decimalPart = copySeconds.slice( idxDot + 1, idxDot + 3 )
+      ;
+    console.log( 'copySeconds', copySeconds );
+    console.log( 'idxDot', idxDot );
+    console.log( 'intergerPart', intergerPart );
+    console.log( 'decimalPart', decimalPart );
+    console.log( '5555555', `${ intergerPart }.${ decimalPart }` );
+    finalStr = `${ intergerPart }.${ decimalPart }`;
+    return new ChronoStatusTime( finalStr, timeLabel );
   }
 
   /**

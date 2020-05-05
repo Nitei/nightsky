@@ -1,0 +1,1 @@
+export type ChronoStatusTimeLabelType = 'hrs' | 'min' | 'seg';

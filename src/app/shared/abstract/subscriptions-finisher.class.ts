@@ -1,12 +1,15 @@
 import { Subject } from 'rxjs';
 import { CompletableObservable } from './subscription-finisher.type';
+import { OnDestroy } from '@angular/core';
 
 /** 
- * Use in ngOndestroy for finish all subscriptions
+ * @description `default` If the child not use ngOnDestroy() this ngOnDestroy will finish `finishTakeUntil$`
+ * in all  the takeUntils which use it;
+ * @ If child component use ngOnDestroy then call in these ngOnDestroy `finishSubscriptions()`
  * @property finishTakeUntil$ Use in takeUntil for finish him
  * @method finishSubscriptions pass observables or subscriptions for finish him
  */
-export abstract class SubscriptionsFinisher {
+export abstract class SubscriptionsFinisher implements OnDestroy {
 
   /** 
    * @param finishTakeUntil$ Usar para finalizar los takeUntil
@@ -31,6 +34,10 @@ export abstract class SubscriptionsFinisher {
       if ( el && el[ 'complete' ] ) { el[ 'complete' ]() };
       if ( el && el[ 'unsubscribe' ] ) { el[ 'unsubscribe' ]() };
     } );
+  }
+
+  ngOnDestroy() {
+    this.finishSubscriptions();
   }
 
 }
