@@ -1,7 +1,7 @@
 import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UtilsService } from './utils.service';
-describe( 'AppComponent', () => {
+xdescribe( 'AppComponent', () => {
   let service: UtilsService;
   beforeEach( async( () => {
     TestBed.configureTestingModule( {} ).compileComponents();
@@ -15,6 +15,6 @@ describe( 'AppComponent', () => {
     expect( service.checkIsNumber(12) ).toEqual( 0 );
   } );
 
-  xit( 'should render title', () => {
+  it( 'should render title', () => {
   } );
 } );

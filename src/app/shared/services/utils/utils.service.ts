@@ -27,15 +27,16 @@ export class UtilsService extends SubscriptionsFinisher {
       if ( x <= 425 ) return "mobile";
     }
     let device: DeviceInfo = new DeviceInfo( checkWidth( window.innerWidth ), window.innerWidth );
-    fromEvent( window, 'resize' ).pipe(
-      takeUntil( this.finishTakeUntil$ ),
-      pluck( 'target', 'innerWidth' ),
-      tap<number>( x => {
-        device.width = x;
-        device.type = checkWidth( x );
-        this.deviceType$.next( device );
-      } )
-    ).subscribe()
+    fromEvent( window, 'resize' )
+      .pipe(
+        takeUntil( this.finishTakeUntil$ ),
+        pluck( 'target' ),
+        tap<Window>( ( { innerWidth } ) => {
+          device.width = innerWidth;
+          device.type = checkWidth( innerWidth );
+          this.deviceType$.next( device );
+        } )
+      ).subscribe()
   }
 
   capitalizeText( text: string ) {

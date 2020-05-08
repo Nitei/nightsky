@@ -18,15 +18,15 @@ import { ChronoStatusTimeLabelType } from '../../../../shared/types/chrono-statu
 } )
 export class CalculadoraComponent extends SubscriptionsFinisher implements OnInit {
 
+  private readonly stopCheckResult: Subject<void> = new Subject();
+  private chrono: number;
+  private resultOperation: number;
   readonly gameTypesNames: TypeGameName[] = [ 'suma', 'resta', 'multiplicacion', 'division', ];
   readonly gameTypesSymbols: TypeGameSymbol[] = [ '+', '-', 'x', '/' ];
-  private stopCheckResult: Subject<void> = new Subject();
-  chrono: number;
   chronoList: ChronoStatus[] = [];
   calculadora: FormGroup;
   currentGameType: number;
   howManyNumbers: number = 1;
-  resultOperation: number;
 
   constructor(
     private fb: FormBuilder,
@@ -144,70 +144,84 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
    * Consigue el tiempo en minutos u horas desde el inicio del juego
    */
   getChronoNumber(): ChronoStatusTime {
+    const timeMiliSeconds: number = Date.now() - this.chrono ;
+    const getMiliseconds = ( miliSeconds ): number | null => {
+      const seconds = ( miliSeconds / 1000 ).toString();
+      if ( seconds.indexOf( '.' ) != -1 ) {
+        return +seconds.slice( seconds.indexOf( '.' ) + 1, seconds.indexOf( '.' ) + 3 )
+      } else return null;
+    }
     let
-      seconds = 80.9546,
+      miliSeconds: number = getMiliseconds( timeMiliSeconds ),
+      seconds = +( timeMiliSeconds / 1000 ).toFixed( 0 ),
+      minits: number = 0,
+      hours: number = 0,
       timeLabel: ChronoStatusTimeLabelType = 'seg',
-      finalStr: any
+      finalStr: string
       ;
-
-    const checkTime = () => {
-      const
-        timeUsed = Date.now() - this.chrono,
-        secondsStr = seconds.toString(),
-        // seconds = timeUsed / 1000,
-        idxPoint = secondsStr.indexOf( '.' ),
-        twoDigitsSeconds = secondsStr.slice( idxPoint + 1, idxPoint + 3 )
+    
+    /**
+     * Funcion which recibe a param as time in miliseconds then this time willbe reduce
+     * dividing
+     * @description One object which have the number
+     *  right(decimalTime) to point and left(intergerTime)
+     * @param time Number which represent time of number interger like 324331230
+     * @returns  {intergerTime: 12, decimalTime: 03}
+     */
+    const getTime = ( time: number)  => {
+      let
+        intergerTime: number = 0,
+        decimalTime: number = time
         ;
-
-      const checkOps = () => {
-        if ( +seconds.toString().slice(
-          seconds.toString().indexOf( '.' ) + 1,
-          seconds.toString().indexOf( '.' ) + 3
-        ) >= 60 ) {
-          checkTime();
-        }
-        if ( (
-          +seconds.toString().slice(
-            0,
-            seconds.toString().indexOf( '.' )
-          )
-        ) >= 60 ) {
-          checkTime();
+      if ( time >= 60 ) {
+        while ( decimalTime >= 60 ) {
+          decimalTime -= 60;
+          intergerTime++;
         }
       }
-      if ( +twoDigitsSeconds >= 60 ) {
-        seconds -= 0.6;
-        seconds += 1;
-      }
-      if ( seconds >= 3600 ) {
-        seconds /= 3600;
-        timeLabel = 'hrs';
-        checkOps()
-      } else if ( seconds >= 60 ) {
-        seconds /= 60;
-        timeLabel = 'min';
-        checkOps()
-      } else {
-        timeLabel = 'seg';
-        checkOps()
+      if ( intergerTime > 0 ) {
+        return {
+          intergerTime,
+          decimalTime
+        }
       }
     }
-    checkTime();
 
+    // Get numbers
+    if ( miliSeconds >= 60 ) {
+      const result = getTime( miliSeconds );
+      if ( result ) {
+        seconds = result.intergerTime;
+        miliSeconds = result.decimalTime;
+      }
+    }
+    if ( seconds >= 60 ) {
+      const result = getTime( seconds );
+      if ( result ) {
+        minits = result.intergerTime;
+        seconds = result.decimalTime;
+      }
+    }
+    if ( minits >= 60 ) {
+      const result = getTime( minits );
+      if ( result ) {
+        hours = result.intergerTime;
+        minits = result.decimalTime;
+      }
+    }
 
-    const
-      copySeconds = seconds.toString(),
-      idxDot = copySeconds.indexOf( '.' ),
-      intergerPart = copySeconds.slice( 0, idxDot ), //  12
-      decimalPart = copySeconds.slice( idxDot + 1, idxDot + 3 )
-      ;
-    console.log( 'copySeconds', copySeconds );
-    console.log( 'idxDot', idxDot );
-    console.log( 'intergerPart', intergerPart );
-    console.log( 'decimalPart', decimalPart );
-    console.log( '5555555', `${ intergerPart }.${ decimalPart }` );
-    finalStr = `${ intergerPart }.${ decimalPart }`;
-    return new ChronoStatusTime( finalStr, timeLabel );
+    // Set time label
+    if ( hours > 0 ) {
+      timeLabel = "hrs";
+      finalStr = `${ hours }.${ minits }`;
+    } else if ( minits > 0 ) {
+      finalStr = `${ minits }.${ seconds }`;
+      timeLabel = "min";
+    } else {
+      finalStr = `${ seconds }.${ miliSeconds }`;
+      timeLabel = "seg";
+    }
+    return new ChronoStatusTime( +finalStr, timeLabel );
   }
 
   /**
