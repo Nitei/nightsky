@@ -28,7 +28,8 @@ body {
 * {
   font-family: Kaushan_Script;
   box-sizing: border-box;
-  // transition: all $transition_time;
+  outline: none;
+  transition: all $transition_time;
 }
 
 h1,
@@ -36,10 +37,10 @@ h2,
 h3,
 h4,
 h5,
-h6,
 div,
 p,
-small {
+span
+h6 {
   margin: 0px;
   font-weight: initial;
   color: $c_blue_dark;
@@ -61,6 +62,9 @@ h5 {
 }
 h5 {
   font-size: 1.3rem;
+}
+h6 {
+  font-size: 1rem;
 }
 input {
   border-radius: 0.5rem;

@@ -51,7 +51,12 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
     return this.calculadora.get( propName ).value;
   }
 
+  resetResults(): void {
+    this.chronoList = [];
+  }
+
   modifyHowManyNumbers( ev: '+' | '-' ) {
+    this.resetResults();
     if ( ev === '-' && this.howManyNumbers > 1 ) {
       this.howManyNumbers--;
     } else if ( ev === '+' ) {
@@ -61,6 +66,7 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
   }
 
   initGame( game: TypeGameName ) {
+    this.resetResults();
     this.currentGameType = this.gameTypesNames.findIndex( el => el === game );
     this.initForm( this.howManyNumbers, game );
   };

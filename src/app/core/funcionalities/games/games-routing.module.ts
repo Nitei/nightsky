@@ -16,9 +16,6 @@ const routes: Routes = [
       }
     ]
   },
-  {
-    path: '', redirectTo: 'games', pathMatch: 'full'
-  }
 ];
 
 @NgModule( {
