@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { UtilsService } from './shared/services/utils/utils.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component( {
   selector: 'ns-root',
@@ -9,8 +10,14 @@ import { UtilsService } from './shared/services/utils/utils.service';
 } )
 export class AppComponent {
 
-  constructor( private us: UtilsService ) {
+  constructor(
+    private us: UtilsService,
+    translate: TranslateService
+  ) {
     this.us.initObservables();
+
+    const browserLang = translate.getBrowserLang();
+    translate.use( browserLang.match( /es|en/ ) ? browserLang : 'en' );
   }
 
 }
