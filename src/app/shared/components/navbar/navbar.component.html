@@ -2,23 +2,27 @@
   <section class="navbar_item">
     <div class="item_part">
       <div class="part_item">
-        <div class="item_brand" routerLink="about">
-          Acerca de mi
+        <div class="item_brand"
+          routerLink="about">
+          <h5>
+            {{ 'ABOUT.Labels.init' | translate }}
+          </h5>
         </div>
-      </div>
-    </div>
-  </section>
-  <section class="navbar_item">
-    <div class="item_part">
-      <div class="part_item">
-        <div class="item_brand" routerLink="games">
-          Juegos
-        </div>
-        <div class="item_brand">
-          Contacto
+        <div class="item_brand"
+          routerLink="games">
+          <h5>
+            {{ 'ABOUT.Labels.games' | translate }}
+          </h5>
         </div>
         <div class="item_brand">
-          Currículum
+          <h5>
+            {{ 'ABOUT.Labels.contact' | translate }}
+          </h5>
+        </div>
+        <div class="item_brand">
+          <h5>
+            {{ 'ABOUT.Labels.curriculum' | translate }}
+          </h5>
         </div>
       </div>
     </div>

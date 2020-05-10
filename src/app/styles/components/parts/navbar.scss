@@ -16,34 +16,50 @@ ns-navbar {
     justify-content: space-between;
     background-color: $c_white_lightest;
     position: fixed;
-    padding: 0 1rem;
+    width: inherit;
 
     .navbar_item {
       height: inherit;
       display: flex;
       align-items: center;
+      width: inherit;
     }
     .item_part {
       display: inherit;
       height: inherit;
+      width: inherit;
 
       .part_item {
         display: inherit;
         height: inherit;
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
 
         .item_brand {
-          
           display: inherit;
           height: inherit;
           align-items: center;
-          margin: 0 1rem 0 0;
         }
       }
     }
   }
 
-  .item_brand:hover {
-    height: inherit;
+  h5:hover {
+    align-items: center;
     color: #6fa4ff;
   }
 }
+
+@media (max-width: 425px) {
+  h5 {
+    font-size: .9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container_navbar {
+    padding: 0px;
+  }
+}
+

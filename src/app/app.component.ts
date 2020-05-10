@@ -16,6 +16,9 @@ export class AppComponent {
   ) {
     this.us.initObservables();
 
+    translate.addLangs( [ 'es', 'en' ] );
+    translate.setDefaultLang( 'en' );
+
     const browserLang = translate.getBrowserLang();
     translate.use( browserLang.match( /es|en/ ) ? browserLang : 'en' );
   }
