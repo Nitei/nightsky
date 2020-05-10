@@ -9,6 +9,7 @@ import { SubscriptionsFinisher } from '../../../../shared/abstract/subscriptions
 import { ChronoStatus } from '../../../../shared/models/chrono.status.model';
 import { ChronoStatusTime } from '../../../../shared/models/chrono-status-time.model';
 import { ChronoStatusTimeLabelType } from '../../../../shared/types/chrono-status-time-label.type';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component( {
   selector: 'ns-calculadora',
@@ -31,7 +32,7 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
   constructor(
     private fb: FormBuilder,
     private us: UtilsService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) { super() }
 
   ngOnInit(): void {

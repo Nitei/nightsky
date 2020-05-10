@@ -1,7 +1,7 @@
 <article class="wrapper_calc">
   <section *ngIf="calculadora"
-    class="calc card_01">
-    <h1>Calculadora</h1>
+    class="calc card">
+    <h1>{{ 'GAMES.Labels.calculator' | translate}}</h1>
     <div class="calc_box">
       <!-- Texto e input -->
       <div class="box_left">
@@ -45,7 +45,7 @@
   </section>
 
   <!-- RESULTADOS -->
-  <section class="results card_01">
+  <section class="results card">
     <h2>Resultados</h2>
     <table>
       <tr>

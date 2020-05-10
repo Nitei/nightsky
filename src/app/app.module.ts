@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { SharedModule } from './shared/shared.module.ts/shared.module';
 import { AboutComponent } from './core/funcionalities/about/about.component';
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -33,6 +33,7 @@ export function HttpLoaderFactory( httpClient: HttpClient ) {
     AppRoutingModule,
     TranslateModule.forRoot( {
       defaultLanguage: 'es',
+      extend: true,
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
@@ -40,7 +41,7 @@ export function HttpLoaderFactory( httpClient: HttpClient ) {
       }
     } )
   ],
-  providers: [ SharedModule, TranslateService ],
+  providers: [ SharedModule ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

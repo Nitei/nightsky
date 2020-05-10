@@ -7,8 +7,17 @@
   margin-bottom: 2rem;
 }
 
-.card_01 {
+.card {
   @extend %card_base;
   background-color: ghostwhite;
+  &.--small {
+    padding: .5rem;
+  }
+  &.--big {
+    padding: 1.5rem;
+  }
+  &.--bigger {
+    padding: 2rem;
+  }
 }
 

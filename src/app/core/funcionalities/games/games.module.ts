@@ -4,9 +4,7 @@ import { CommonModule } from '@angular/common';
 import { GamesRoutingModule } from './games-routing.module';
 import { GamesComponent } from './games.component';
 import { CalculadoraComponent } from './calculadora/calculadora.component';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { SharedModule } from '../../../shared/shared.module.ts/shared.module';
-
 
 @NgModule({
   imports: [
@@ -21,6 +19,7 @@ import { SharedModule } from '../../../shared/shared.module.ts/shared.module';
   declarations: [
     GamesComponent,
     CalculadoraComponent,
-  ]
+  ],
+  providers: [ ]
 })
 export class GamesModule { }

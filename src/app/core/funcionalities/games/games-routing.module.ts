@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { GamesComponent } from './games.component';
 import { CalculadoraComponent } from './calculadora/calculadora.component';
 
-
 const routes: Routes = [
   {
     path: 'games', component: GamesComponent,

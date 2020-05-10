@@ -9,5 +9,19 @@
     "Description" : {
       "first": "Hola, Me llamo Jorge Jesús Campoy López y soy un apasionado del desarrollo web, desde pequeño siempre me gustó mucho, el dibujo, la medicina, y la informatica aunque desde muy joven me he dedicado a la hostelería para ayudar a mi familia, tiempo despues y gracias a un amigo me introduje en el mundo de la programación y maravillado por las posibilidades que éste ofrece me puse manos a la obra para descubrir todas las cosas que puedo crear"
     }
+  },
+  "GAMES": {
+    "Labels": {
+      "calculator": "Calculadora",
+      "subtract": "Restar",
+      "sum": "Sumar",
+      "multiply": "Multiplicar",
+      "divide": "Dividir",
+      "level": "Nivel",
+      "results": "Resultados",
+      "result": "Resultado",
+      "time": "Tiempo",
+      "chosed": "Elección"
+    }
   }
 }

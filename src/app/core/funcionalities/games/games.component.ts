@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonModel } from '../../../shared/models/button.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ns-games',
@@ -15,14 +16,11 @@ export class GamesComponent implements OnInit {
   }
 
   constructor(
-    private router: Router
+    private router: Router,
+    public translate: TranslateService
   ) { }
 
-  ngOnInit(): void {
-  }
-
-  goCalc() {
-    this.router.navigate(['/games/calculadora'])
+  ngOnInit() {
   }
 
 }

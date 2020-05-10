@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AboutComponent } from './core/funcionalities/about/about.component';
 
-
 const routes: Routes = [
   {
     path: 'games', loadChildren: () => import( './core/funcionalities/games/games.module' ).then( m => m.GamesModule ),
@@ -18,8 +17,12 @@ const routes: Routes = [
   }
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+@NgModule( {
+  imports: [
+    RouterModule.forRoot( routes )
+  ],
+  exports: [
+    RouterModule,
+  ]
 })
 export class AppRoutingModule { }
