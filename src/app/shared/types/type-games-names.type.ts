@@ -1,1 +1,1 @@
-export type TypeGameName = 'multiplicacion' | 'division' | 'suma' | 'resta';
+export type TypeGameName = 'sum' | 'subtract' | 'multiply' | 'divide';

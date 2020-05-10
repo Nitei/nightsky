@@ -15,7 +15,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     TranslateModule
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    TranslateModule
   ],
   providers: [TranslateService]
 })

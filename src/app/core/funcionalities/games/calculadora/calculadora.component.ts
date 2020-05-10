@@ -22,7 +22,7 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
   private readonly stopCheckResult: Subject<void> = new Subject();
   private chrono: number;
   private resultOperation: number;
-  readonly gameTypesNames: TypeGameName[] = [ 'suma', 'resta', 'multiplicacion', 'division', ];
+  readonly gameTypesNames: TypeGameName[] = [ 'sum', 'subtract', 'multiply', 'divide' ];
   readonly gameTypesSymbols: TypeGameSymbol[] = [ '+', '-', 'x', '/' ];
   chronoList: ChronoStatus[] = [];
   calculadora: FormGroup;
@@ -37,7 +37,7 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
 
   ngOnInit(): void {
     this.currentGameType = 3;
-    this.initGame( 'suma' );
+    this.initGame( 'sum' );
   }
 
   ngOnDestroy(): void {
@@ -128,16 +128,16 @@ export class CalculadoraComponent extends SubscriptionsFinisher implements OnIni
   private getFinalResult( TypeGameName: TypeGameName, firstN: number, secondN: number ): number {
     let result: number;
     switch ( TypeGameName ) {
-      case 'multiplicacion':
+      case 'multiply':
         result = firstN * secondN;
         break;
-      case 'division':
+      case 'divide':
         result = parseFloat( ( firstN / secondN ).toFixed( 1 ) );
         break;
-      case 'suma':
+      case 'sum':
         result = firstN + secondN;
         break;
-      case 'resta':
+      case 'subtract':
         result = firstN - secondN;
         break;
       default:

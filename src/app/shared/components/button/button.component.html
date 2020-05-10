@@ -1,1 +1,10 @@
-  <button *ngIf="button" class="{{button?.class}}" (click)="clicked.emit()">{{button?.label}}</button>
+<button
+  class="{{class}}"
+  (click)="clicked.emit()">
+  <div *ngIf="translatable">
+    {{label | translate}}
+  </div>
+  <div *ngIf="!translatable">
+    {{label}}
+  </div>
+</button>

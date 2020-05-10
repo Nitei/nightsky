@@ -10,10 +10,6 @@ import { TranslateService } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GamesComponent implements OnInit {
-  btnConfig: ButtonModel = {
-    class: 'w_normal c_white bg_red',
-    label: 'Texto'
-  }
 
   constructor(
     private router: Router,

@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ButtonModel } from '../../models/button.model';
 
 @Component({
   selector: 'ns-button',
@@ -7,6 +6,9 @@ import { ButtonModel } from '../../models/button.model';
   styleUrls: [ './button.component.scss' ]
 } )
 export class ButtonComponent {
-  @Input() button: ButtonModel;
+  @Input() class: string = ''; // 'w_normal bg_red c_white'
+  @Input() label: string = ''; // Texto en el botón
+  @Input() translatable: boolean = true;
+
   @Output() clicked: EventEmitter<void> = new EventEmitter();
 }

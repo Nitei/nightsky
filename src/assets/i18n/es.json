@@ -1,4 +1,6 @@
+
 {
+  "COMMONS": {},
   "ABOUT": {
     "Labels": {
       "init": "Inicio",
@@ -21,7 +23,12 @@
       "results": "Resultados",
       "result": "Resultado",
       "time": "Tiempo",
-      "chosed": "Elección"
+      "election": "Elección"
+    },
+    "Brands": {
+      "howMuch": "Cuanto es",
+      "levelUp": "Nivel +",
+      "levelDown": "Nivel -"
     }
   }
 }
