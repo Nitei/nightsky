@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AboutComponent } from './core/funcionalities/about/about.component';
+import { CurriculumComponent } from './core/funcionalities/curriculum/curriculum.component';
 
 const routes: Routes = [
   {
@@ -9,9 +10,9 @@ const routes: Routes = [
   {
     path: 'about', component: AboutComponent,
   },
-  // {
-  //   path: 'curriculum', component:
-  // },
+  {
+    path: 'curriculum', component: CurriculumComponent
+  },
   {
     path: '**', redirectTo: 'about'
   }

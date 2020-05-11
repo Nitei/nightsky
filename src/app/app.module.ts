@@ -11,6 +11,7 @@ import { AboutComponent } from './core/funcionalities/about/about.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CurriculumComponent } from './core/funcionalities/curriculum/curriculum.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory( httpClient: HttpClient ) {
@@ -23,6 +24,7 @@ export function HttpLoaderFactory( httpClient: HttpClient ) {
     AppComponent,
     NavbarComponent,
     AboutComponent,
+    CurriculumComponent,
   ],
   imports: [
     HttpClientModule,
