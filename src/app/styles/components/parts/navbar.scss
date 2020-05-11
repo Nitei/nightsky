@@ -10,6 +10,8 @@ ns-navbar {
   @extend %container_size;
   position: fixed;
   top: 0;
+  z-index: 1;
+
 
   .container_navbar {
     @extend %container_size;
