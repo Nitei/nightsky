@@ -1,0 +1,70 @@
+{
+  "COMMONS": {},
+  "NAVBAR": {
+    "Labels": {
+      "init": "Inicio",
+      "games": "Juegos",
+      "switchLanguaje": "English",
+      "curriculum": "Currículum"
+    }
+  },
+  "ABOUT": {
+    "Description": {
+      "first": "Hola, me llamo Jorge Jesús Campoy López y soy un apasionado del desarrollo web, desde pequeño siempre me gustó mucho, el dibujo, la medicina, y la informatica aunque desde muy joven me he dedicado a la hostelería para ayudar a mi familia, tiempo despues y gracias a un amigo me introduje en el mundo de la programación y maravillado por las posibilidades que éste ofrece me puse manos a la obra para descubrir todas las cosas que puedo crear"
+    }
+  },
+  "GAMES": {
+    "Labels": {
+      "calculator": "Calculadora",
+      "subtract": "Restar",
+      "sum": "Sumar",
+      "multiply": "Multiplicar",
+      "divide": "Dividir",
+      "level": "Nivel",
+      "results": "Resultados",
+      "result": "Resultado",
+      "time": "Tiempo",
+      "election": "Elección"
+    },
+    "Phrases": {
+      "howMuch": "Cuanto es",
+      "levelUp": "Nivel +",
+      "levelDown": "Nivel -"
+    }
+  },
+  "CONTACT": {
+    "Labels": {
+      "linkedin": "LinkedIn",
+      "email": "Email"
+    },
+    "Links": {
+      "email": "jorgecampoy81@gmail.com",
+      "linkedin": "https://www.linkedin.com/in/jorge-jes%C3%BAs-campoy-l%C3%B3pez-53829a129/"
+    }
+  },
+  "CURRICULUM": {
+    "Titles": {
+      "description": "Descripción",
+      "level": "Nivel",
+      "technologies": "Tecnologías",
+      "technology": "Tecnología",
+      "functionsPerformed": "Funciones realizadas"
+    },
+    "Descriptions": {
+      "_01" : "Soy desarrollador front especializado en Angular desde el año 2018.",
+      "_02" : "Amante de las buenas prácticas y el código limpio, en busca de un reto profesional que me haga crecer aun más.",
+      "_03" : "He desarrolado tanto la maquetación como la lógica y la optimización de diferentes aplicaciones."
+    },
+    "FunctionsPerformed":  {
+      "_01": "Creación de la arquitectura del proyecto.",
+      "_02": "Desarrollo de la lógica de las funcionalidades.",
+      "_03": "Depuración de errores.",
+      "_04": "Maquetación UX.",
+      "_05": "Optimización y análisis de componentes.",
+      "_06": "Estudio de los documentos de definición de requisitos y comunicación con el cliente.",
+      "_07": "Ayuda a los compañeros de equipo.",
+      "_08": "Prevención de bugs.",
+      "_09": "Resolución de incidencias."
+    }
+  }
+}
