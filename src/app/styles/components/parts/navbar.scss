@@ -46,14 +46,17 @@ ns-navbar {
   }
 
   h5:hover {
-    align-items: center;
     color: #6fa4ff;
   }
 }
 
+.router_active {
+  color: #6fa4ff;
+}
+
 @media (max-width: 425px) {
   h5 {
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -62,4 +65,3 @@ ns-navbar {
     padding: 0px;
   }
 }
-

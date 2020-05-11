@@ -1,12 +1,14 @@
 {
   "COMMONS": {},
-  "ABOUT": {
+  "NAVBAR": {
     "Labels": {
       "init": "Init",
       "games": "Games",
-      "contact": "Contact",
+      "switchLanguaje": "Spanish",
       "curriculum": "Curriculum"
-    },
+    }
+  },
+  "ABOUT": {
     "Description": {
       "first": "Hello, my name is Jorge Jesús Campoy López and I am passionate about web development, since I was a child I always liked a lot, drawing, medicine, and computer science, although from a young age I have dedicated myself to hospitality to help my family, some time later and thanks to a friend I entered the world of programming and marveled at the possibilities it offers, I got down to work to discover all the things I can create"
     }
@@ -24,10 +26,20 @@
       "time": "Time",
       "election": "Election"
     },
-    "Brands" : {
+    "Phrases": {
       "howMuch": "How much is",
       "levelUp": "Level +",
       "levelDown": "Level -"
+    }
+  },
+  "CONTACT": {
+    "Labels": {
+      "linkedin": "LinkedIn",
+      "email": "Email"
+    },
+    "Links": {
+      "email": "jorgecampoy81@gmail.com",
+      "linkedin": "https://www.linkedin.com/in/jorge-jes%C3%BAs-campoy-l%C3%B3pez-53829a129/"
     }
   }
 }

@@ -12,15 +12,14 @@ export class AppComponent {
 
   constructor(
     private us: UtilsService,
-    translate: TranslateService
+    private translate: TranslateService
   ) {
     this.us.initObservables();
 
-    translate.addLangs( [ 'es', 'en' ] );
-    translate.setDefaultLang( 'en' );
+    this.translate.addLangs( [ 'es', 'en' ] );
 
     const browserLang = translate.getBrowserLang();
-    translate.use( browserLang.match( /es|en/ ) ? browserLang : 'en' );
+    this.translate.use( browserLang.match( /es|en/ ) ? browserLang : 'en' );
   }
 
 }

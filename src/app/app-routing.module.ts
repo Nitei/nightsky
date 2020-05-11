@@ -9,9 +9,9 @@ const routes: Routes = [
   {
     path: 'about', component: AboutComponent,
   },
-  {
-    path: '', redirectTo: 'about', pathMatch: 'full'
-  },
+  // {
+  //   path: 'curriculum', component:
+  // },
   {
     path: '**', redirectTo: 'about'
   }

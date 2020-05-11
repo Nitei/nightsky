@@ -2,26 +2,24 @@
   <section class="navbar_item">
     <div class="item_part">
       <div class="part_item">
-        <div class="item_brand"
-          routerLink="about">
-          <h5>
-            {{ 'ABOUT.Labels.init' | translate }}
-          </h5>
-        </div>
-        <div class="item_brand"
-          routerLink="games">
-          <h5>
-            {{ 'ABOUT.Labels.games' | translate }}
+        <div class="item_brand">
+          <h5 routerLink="about" routerLinkActive="router_active">
+            {{ 'NAVBAR.Labels.init' | translate }}
           </h5>
         </div>
         <div class="item_brand">
-          <h5>
-            {{ 'ABOUT.Labels.contact' | translate }}
+          <h5 routerLink="games" routerLinkActive="router_active">
+            {{ 'NAVBAR.Labels.games' | translate }}
           </h5>
         </div>
         <div class="item_brand">
-          <h5>
-            {{ 'ABOUT.Labels.curriculum' | translate }}
+          <h5 (click)="switchLanguaje()">
+            {{ 'NAVBAR.Labels.switchLanguaje' | translate }}
+          </h5>
+        </div>
+        <div class="item_brand">
+          <h5 routerLink="curriculum" routerLinkActive="router_active">
+            {{ 'NAVBAR.Labels.curriculum' | translate }}
           </h5>
         </div>
       </div>

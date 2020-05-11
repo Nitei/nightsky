@@ -7,7 +7,7 @@
       <div class="box_left">
         <div [formGroup]="calculadora">
           <div [ngSwitch]="formGet('TypeGameName')">
-            <h5>{{ 'GAMES.Brands.howMuch' | translate }} {{formGet('firstNumber')}}
+            <h5>{{ 'GAMES.Phrases.howMuch' | translate }} {{formGet('firstNumber')}}
               <span *ngFor="let game of gameTypesNames; let i = index">
                 <span *ngSwitchCase="game">{{gameTypesSymbols[i]}}</span>
               </span>
@@ -35,12 +35,12 @@
       <div class="wrapper">
         <div class="pair">
           <ns-button [class]="'w_small bg_blue'"
-            [label]="'GAMES.Brands.levelUp'"
+            [label]="'GAMES.Phrases.levelUp'"
             (clicked)="modifyHowManyNumbers('+')"></ns-button>
         </div>
         <div class="pair">
           <ns-button [class]="'w_small bg_blue'"
-            [label]="'GAMES.Brands.levelDown'"
+            [label]="'GAMES.Phrases.levelDown'"
             (clicked)="modifyHowManyNumbers('-')"></ns-button>
         </div>
       </div>

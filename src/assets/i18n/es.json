@@ -1,15 +1,16 @@
-
 {
   "COMMONS": {},
-  "ABOUT": {
+  "NAVBAR": {
     "Labels": {
       "init": "Inicio",
       "games": "Juegos",
-      "contact": "Contacto",
+      "switchLanguaje": "English",
       "curriculum": "Currículum"
-    },
-    "Description" : {
-      "first": "Hola, Me llamo Jorge Jesús Campoy López y soy un apasionado del desarrollo web, desde pequeño siempre me gustó mucho, el dibujo, la medicina, y la informatica aunque desde muy joven me he dedicado a la hostelería para ayudar a mi familia, tiempo despues y gracias a un amigo me introduje en el mundo de la programación y maravillado por las posibilidades que éste ofrece me puse manos a la obra para descubrir todas las cosas que puedo crear"
+    }
+  },
+  "ABOUT": {
+    "Description": {
+      "first": "Hola, me llamo Jorge Jesús Campoy López y soy un apasionado del desarrollo web, desde pequeño siempre me gustó mucho, el dibujo, la medicina, y la informatica aunque desde muy joven me he dedicado a la hostelería para ayudar a mi familia, tiempo despues y gracias a un amigo me introduje en el mundo de la programación y maravillado por las posibilidades que éste ofrece me puse manos a la obra para descubrir todas las cosas que puedo crear"
     }
   },
   "GAMES": {
@@ -25,10 +26,20 @@
       "time": "Tiempo",
       "election": "Elección"
     },
-    "Brands": {
+    "Phrases": {
       "howMuch": "Cuanto es",
       "levelUp": "Nivel +",
       "levelDown": "Nivel -"
+    }
+  },
+  "CONTACT": {
+    "Labels": {
+      "linkedin": "LinkedIn",
+      "email": "Email"
+    },
+    "Links": {
+      "email": "jorgecampoy81@gmail.com",
+      "linkedin": "https://www.linkedin.com/in/jorge-jes%C3%BAs-campoy-l%C3%B3pez-53829a129/"
     }
   }
 }

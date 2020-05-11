@@ -12,7 +12,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-
 // AoT requires an exported function for factories
 export function HttpLoaderFactory( httpClient: HttpClient ) {
   return new TranslateHttpLoader( httpClient, './assets/i18n/', '.json');
@@ -23,7 +22,7 @@ export function HttpLoaderFactory( httpClient: HttpClient ) {
   declarations: [
     AppComponent,
     NavbarComponent,
-    AboutComponent
+    AboutComponent,
   ],
   imports: [
     HttpClientModule,
@@ -32,7 +31,6 @@ export function HttpLoaderFactory( httpClient: HttpClient ) {
     RouterModule,
     AppRoutingModule,
     TranslateModule.forRoot( {
-      defaultLanguage: 'es',
       extend: true,
       loader: {
         provide: TranslateLoader,
