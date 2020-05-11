@@ -1,1 +1,59 @@
-<p>curriculum works!</p>
+
+<div class="container">
+  <div class="card">
+    <div class="fields">
+      <div class="field">
+        <h4>Descripción</h4>
+        <p class="paragraph ff_raleway">
+          Soy desarrollador front especializado en Angular desde el año 2018.<br>
+          Amante de las buenas prácticas y el código limpio, en busca de un reto profesional que me haga crecer aun más.<br>
+          He desarrolado, tanto la maquetación como la lógica y la optimización de diferentes aplicaciones.
+        </p>
+        <p class="ff_raleway"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Funciones realizadas -->
+<div class="container">
+  <div class="card">
+    <div class="fields">
+      <div class="field">
+        <h4>Funciones realizadas</h4>
+        <ul>
+          <li>Creación de la arquitectura del proyecto.</li>
+          <li>Desarrollo de la lógica de las funcionalidades.</li>
+          <li>Depuración de errores.</li>
+          <li>Maquetación UX.</li>
+          <li>Optimización y análisis de componentes.</li>
+          <li>Estudio de los documentos de definición de requisitos y comunicación con el cliente.</li>
+          <li>Ayuda a los compañeros de equipo.</li>
+          <li>Prevención de bugs.</li>
+          <li>Resolución de incidencias.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Funciones realizadas -->
+<div class="container">
+  <div class="card">
+    <div class="fields">
+      <div class="field">
+        <h4>Tecnologías</h4>
+        <table class="table_skill">
+          <tr>
+            <th class="left" (click)="switchSortSkillListBy('tech')">Tecnología</th>
+            <th class="right" (click)="switchSortSkillListBy('level')">Nivel</th>
+          </tr>
+          <tr class="skill_list" *ngFor="let skill of skillList">
+            <td class="p_03 ff_raleway">{{skill.tech}}</td>
+            <td class="p_03 right ff_raleway">{{skill.level}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

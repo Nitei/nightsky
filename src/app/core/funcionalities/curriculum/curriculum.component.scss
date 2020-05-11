@@ -1,0 +1,33 @@
+@import "../../../styles/index";
+
+li {
+  @extend .ff_raleway;
+  @extend .p_02;
+  list-style: circle;
+}
+
+.even {
+  background-color: white;
+}
+
+.table_skill {
+  width: 100%;
+  border: 1px solid white;
+    th.left,
+    th.right {
+      cursor: pointer;
+    }
+    .left {
+      text-align: left;
+    }
+    .right {
+      text-align: center;
+    };
+  .skill_list:nth-child(even) {
+    background-color: white;
+  }
+}
+
+// height: 0;
+// overflow-y: hidden;
+// padding: 0;
