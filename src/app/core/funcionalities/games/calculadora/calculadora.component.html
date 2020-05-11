@@ -1,5 +1,7 @@
-<article class="wrapper_calc">
-  <section *ngIf="calculadora"
+<article class="animated fast fadeIn">
+
+  <article class="wrapper_calc">
+    <section *ngIf="calculadora"
     class="calc card">
     <h1>{{ 'GAMES.Labels.calculator' | translate }}</h1>
     <div class="calc_box">
@@ -16,7 +18,7 @@
             </h5>
           </div>
           <input formControlName="result"
-            nsOnlyNumber>
+          nsOnlyNumber>
         </div>
       </div>
     </div>
@@ -24,54 +26,56 @@
     <div class="buttons">
       <div class="wrapper">
         <div class="pair"
-          *ngFor="let game of gameTypesNames; let i = index">
+        *ngFor="let game of gameTypesNames; let i = index">
             <ns-button [class]="'w_small bg_blue'"
               [label]="'GAMES.Labels.' + game"
               (clicked)="initGame(game)"></ns-button>
+            </div>
+          </div>
+          <div>
+          </div>
+          <div class="wrapper">
+            <div class="pair">
+              <ns-button [class]="'w_small bg_blue'"
+              [label]="'GAMES.Phrases.levelUp'"
+              (clicked)="modifyHowManyNumbers('+')"></ns-button>
+            </div>
+            <div class="pair">
+              <ns-button [class]="'w_small bg_blue'"
+              [label]="'GAMES.Phrases.levelDown'"
+              (clicked)="modifyHowManyNumbers('-')"></ns-button>
+            </div>
+          </div>
         </div>
-      </div>
-      <div>
-      </div>
-      <div class="wrapper">
-        <div class="pair">
-          <ns-button [class]="'w_small bg_blue'"
-            [label]="'GAMES.Phrases.levelUp'"
-            (clicked)="modifyHowManyNumbers('+')"></ns-button>
-        </div>
-        <div class="pair">
-          <ns-button [class]="'w_small bg_blue'"
-            [label]="'GAMES.Phrases.levelDown'"
-            (clicked)="modifyHowManyNumbers('-')"></ns-button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RESULTADOS -->
-  <section class="results card">
-    <h2>{{ 'GAMES.Labels.results' | translate }}</h2>
-    <table>
-      <tr>
-        <th>
-          <h5>{{ 'GAMES.Labels.time' | translate }}</h5>
-        </th>
-        <th>
-          <h5>{{ 'GAMES.Labels.election' | translate }}</h5>
-        </th>
-        <th>
-          <h5>{{ 'GAMES.Labels.result' | translate }}</h5>
-        </th>
-      </tr>
-      <tr class="animated faster slideHiddenInUp"
-        [ngClass]="{
-        'win': result?.win === true,
-        'lose': result?.win === false 
-      }"
-        *ngFor="let result of chronoList">
-        <td>{{result?.time?.chrono}} {{result?.time?.label}}</td>
-        <td>{{result?.election}}</td>
-        <td>{{result?.result}}</td>
-      </tr>
-    </table>
-  </section>
+      </section>
+      
+      <!-- RESULTADOS -->
+      <section class="results card">
+        <h2>{{ 'GAMES.Labels.results' | translate }}</h2>
+        <table>
+          <tr>
+            <th>
+              <h5>{{ 'GAMES.Labels.time' | translate }}</h5>
+            </th>
+            <th>
+              <h5>{{ 'GAMES.Labels.election' | translate }}</h5>
+            </th>
+            <th>
+              <h5>{{ 'GAMES.Labels.result' | translate }}</h5>
+            </th>
+          </tr>
+          <tr class="animated faster slideHiddenInUp"
+          [ngClass]="{
+            'win': result?.win === true,
+            'lose': result?.win === false 
+          }"
+          *ngFor="let result of chronoList">
+          <td>{{result?.time?.chrono}} {{result?.time?.label}}</td>
+          <td>{{result?.election}}</td>
+          <td>{{result?.result}}</td>
+        </tr>
+      </table>
+    </section>
+  </article>
+  
 </article>

@@ -41,5 +41,30 @@
       "email": "jorgecampoy81@gmail.com",
       "linkedin": "https://www.linkedin.com/in/jorge-jes%C3%BAs-campoy-l%C3%B3pez-53829a129/"
     }
+  },
+  "CURRICULUM": {
+    "Titles": {
+      "description": "Description",
+      "level": "level",
+      "technologies": "Technologies",
+      "technology": "Technology",
+      "functionsPerformed": "Functions performed"
+    },
+    "Descriptions": {
+      "_01": "I've been a front-end developer specialized in Angular since 2018.",
+      "_02": "Lover of good practices and clean code, looking for a professional challenge that will make me grow even more.",
+      "_03": "I have developed both the layout and the logic and optimization of different applications."
+    },
+    "FunctionsPerformed": {
+      "_01": "Creation of the project architecture.",
+      "_02": "Development of the logic of the functionalities.",
+      "_03": "Debugging errors.",
+      "_04": "UX layout.",
+      "_05": "Component optimization and analysis.",
+      "_06": "Study of the requirements definition documents and communication with the client.",
+      "_07": "Help teammates.",
+      "_08": "Bug prevention.",
+      "_09": "Troubleshooting."
+    }
   }
 }

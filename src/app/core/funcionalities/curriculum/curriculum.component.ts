@@ -25,7 +25,8 @@ export class CurriculumComponent implements OnInit {
     { tech: "Reactive forms", level: 7 },
     { tech: "Jenkins", level: 1 },
     { tech: "Webpack", level: 5 },
-    { tech: "Npm", level: 6 }
+    { tech: "Npm", level: 6 },
+    { tech: "RWD / Responsive Web Design", level: 8 }
   ];
 
   constructor() {

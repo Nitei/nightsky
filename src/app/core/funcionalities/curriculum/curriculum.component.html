@@ -1,48 +1,51 @@
+<article class="animated fast fadeIn">
 
-<div class="container">
-  <div class="card">
-    <div class="fields">
-      <div class="field">
-        <h4>{{ 'CURRICULUM.Titles.description' | translate }}</h4>
-        <p class="p_03 ff_raleway" *ngFor="let desc of [1,2,3]">
-          {{ 'CURRICULUM.Descriptions._0' + desc | translate }}
-        </p>
+  <div class="container">
+    <div class="card">
+      <div class="fields">
+        <div class="field">
+          <h4>{{ 'CURRICULUM.Titles.description' | translate }}</h4>
+          <p class="p_03 ff_raleway" *ngFor="let desc of [1,2,3]">
+            {{ 'CURRICULUM.Descriptions._0' + desc | translate }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<!-- Funciones realizadas -->
-<div class="container">
-  <div class="card">
-    <div class="fields">
-      <div class="field">
-        <h4>{{ 'CURRICULUM.Titles.functionsPerformed' | translate }}</h4>
-        <ul>
-          <li *ngFor="let func of [1,2,3,4,5,6,7,8,9]">{{ 'CURRICULUM.FunctionsPerformed._0' + func | translate }}</li>
-        </ul>
+  
+  <!-- Funciones realizadas -->
+  <div class="container">
+    <div class="card">
+      <div class="fields">
+        <div class="field">
+          <h4>{{ 'CURRICULUM.Titles.functionsPerformed' | translate }}</h4>
+          <ul>
+            <li *ngFor="let func of [1,2,3,4,5,6,7,8,9]">{{ 'CURRICULUM.FunctionsPerformed._0' + func | translate }}</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<!-- Tecnologías -->
-<div class="container">
-  <div class="card">
-    <div class="fields">
-      <div class="field">
-        <h4>{{ 'CURRICULUM.Titles.technologies' | translate }}</h4>
-        <table class="table_skill">
-          <tr>
-            <th class="left" (click)="switchSortSkillListBy('tech')">{{ 'CURRICULUM.Titles.technology' | translate }}</th>
-            <th class="right" (click)="switchSortSkillListBy('level')">{{ 'CURRICULUM.Titles.level' | translate }}</th>
-          </tr>
-          <tr class="skill_list" *ngFor="let skill of skillList">
-            <td class="p_03 ff_raleway">{{skill.tech}}</td>
-            <td class="p_03 right ff_raleway">{{skill.level}}</td>
-          </tr>
-        </table>
+  
+  <!-- Tecnologías -->
+  <div class="container">
+    <div class="card">
+      <div class="fields">
+        <div class="field">
+          <h4>{{ 'CURRICULUM.Titles.technologies' | translate }}</h4>
+          <table class="table_skill">
+            <tr>
+              <th class="left" (click)="switchSortSkillListBy('tech')">{{ 'CURRICULUM.Titles.technology' | translate }}</th>
+              <th class="right" (click)="switchSortSkillListBy('level')">{{ 'CURRICULUM.Titles.level' | translate }}</th>
+            </tr>
+            <tr class="skill_list" *ngFor="let skill of skillList">
+              <td class="p_03 ff_raleway">{{skill.tech}}</td>
+              <td class="p_03 right ff_raleway">{{skill.level}}</td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
-</div>
+  
+</article>

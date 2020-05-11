@@ -1,4 +1,10 @@
-<div class="container card">
-<div class="box container_picture"><img class="picture"></div>
-<div class="box"><p class="ff_raleway">{{'ABOUT.Description.first' | translate}}</p></div>
-</div>
+<article class="animated fast fadeIn">
+  <div class="container card">
+    <div class="box container_picture"><img class="picture"></div>
+    <div class="box"><p class="ff_raleway">{{'ABOUT.Description.first' | translate}}</p></div>
+  </div>
+  <div class="container card">
+    <div class="box"><p class="ff_raleway">{{'CONTACT.Labels.email' | translate}}: {{'CONTACT.Links.email' | translate}}</p></div>
+    <p class="ff_raleway pointer" (click)="goLinkedin()">{{'CONTACT.Labels.linkedin' | translate}}</p>
+  </div>
+</article>
