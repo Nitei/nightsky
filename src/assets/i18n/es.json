@@ -41,5 +41,30 @@
       "email": "jorgecampoy81@gmail.com",
       "linkedin": "https://www.linkedin.com/in/jorge-jes%C3%BAs-campoy-l%C3%B3pez-53829a129/"
     }
+  },
+  "CURRICULUM": {
+    "Titles": {
+      "description": "Descripción",
+      "level": "Nivel",
+      "technologies": "Tecnologías",
+      "technology": "Tecnología",
+      "functionsPerformed": "Funciones realizadas"
+    },
+    "Descriptions": {
+      "_01" : "Soy desarrollador front especializado en Angular desde el año 2018.",
+      "_02" : "Amante de las buenas prácticas y el código limpio, en busca de un reto profesional que me haga crecer aun más.",
+      "_03" : "He desarrolado tanto la maquetación como la lógica y la optimización de diferentes aplicaciones."
+    },
+    "FunctionsPerformed":  {
+      "_01": "Creación de la arquitectura del proyecto.",
+      "_02": "Desarrollo de la lógica de las funcionalidades.",
+      "_03": "Depuración de errores.",
+      "_04": "Maquetación UX.",
+      "_05": "Optimización y análisis de componentes.",
+      "_06": "Estudio de los documentos de definición de requisitos y comunicación con el cliente.",
+      "_07": "Ayuda a los compañeros de equipo.",
+      "_08": "Prevención de bugs.",
+      "_09": "Resolución de incidencias."
+    }
   }
 }

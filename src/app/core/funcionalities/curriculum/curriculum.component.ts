@@ -32,7 +32,6 @@ export class CurriculumComponent implements OnInit {
     this.switchSortSkillListBy();
   }
 
-
   ngOnInit(): void {
   }
 
